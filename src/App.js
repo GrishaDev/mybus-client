@@ -5,8 +5,8 @@ import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import { Router } from 'react-router';
 import history from 'utils/history';
-import MainPage from './visual/MainPage';
-import Login from './visual/Login';
+import MainPage from 'pages/MainPage';
+import Login from 'pages/Login';
 import ProtectedRoute from 'utils/privateRoute';
 
 function App() {
@@ -14,8 +14,8 @@ function App() {
     <Provider store={store}>
         <Router history={history}>
             <Switch>
-                <Route exact path="/login" component={Login} />
-                <ProtectedRoute exact path="/" component={MainPage} />
+                <Route exact path="/" component={MainPage} />
+                {/* <ProtectedRoute exact path="/" component={MainPage} /> */}
             </Switch>
         </Router>
     </Provider>
