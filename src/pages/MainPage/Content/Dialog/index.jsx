@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -8,16 +8,16 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 
-import styles from './styles';
+// import styles from './styles';
 
-const useStyles = makeStyles(styles);
+// const useStyles = makeStyles(styles);
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default ({ open, setOpen, schedule }) => {
-  const classes = useStyles();
+export default ({ open, setOpen, schedule, onConfirm }) => {
+  // const classes = useStyles();
 
   const handleClose = () => {
     setOpen(false);
@@ -43,7 +43,7 @@ export default ({ open, setOpen, schedule }) => {
           <Button onClick={handleClose} color="primary">
             nah
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={() => onConfirm({id: '3294a', rule: {hour: 7}})} color="primary">
             update
           </Button>
         </DialogActions>

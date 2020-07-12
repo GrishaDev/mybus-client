@@ -1,6 +1,7 @@
 export default {
     content: {
-        maxHeight: '75%',
+        // marginTop: '50px',
+        maxHeight: '75vh',
         // background: 'red',
         width: '75%',
         margin: '0 auto',

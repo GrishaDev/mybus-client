@@ -8,10 +8,10 @@
 // }
 
  
-import { put, call, takeEvery, all, select } from 'redux-saga/effects';
+import { put, call, takeEvery, take, all, select, setContext, getContext } from 'redux-saga/effects';
 import { updateToken, updateSchedules, loginRequest, 
 schedulesRequest, deleteScheduleRequest, createScheduleRequest, updateScheduleRequest,
-addSchedule, updateSchedule, deleteSchedule } from './mainReducer';
+addSchedule, updateSchedule, deleteSchedule, updateSnackbar, showNotification } from './mainReducer';
 import { loginApi, getSchedulesApi, createScheduleApi, updateScheduleApi, deleteScheduleApi } from 'api';
 import history from 'utils/history';
 
@@ -35,6 +35,23 @@ export function* watchUpdateSaga() {
     yield takeEvery(updateScheduleRequest.type, updateSchedulesSaga)
 }
 
+export function *notification() {
+    yield takeEvery(updateSnackbar, function* (action) {
+        console.log('...');
+        console.log(action.payload);
+        // yield setContext({snackbar: action.payload})
+        const snackbar = yield getContext("snackbar");
+        Object.assign(snackbar, action.payload);
+    })
+    yield takeEvery(showNotification, function* (action) {
+        console.log(action.payload);
+        // const { msg, } = action.payload;
+        const context = yield getContext("snackbar");
+        context.enqueueSnackbar(action.payload, { variant: 'error' });
+        // yield getContext("snackbar")?.enqueueSnackbar(action.payload)
+    })
+}
+
 
 function* loginSaga(data) {
     const { payload } = data;
@@ -50,10 +67,13 @@ function* getSchedulesSaga() {
 }
 
 function* deleteSchedulesSaga(data) {
-    const { payload } = data;
-    const res = yield call(deleteScheduleApi, payload);
-    if(res)
-        yield put(deleteSchedule(payload));
+    console.log('.');
+    yield put(showNotification('bad'))
+    // enqueueSnackbar('haha');
+    // const { payload } = data;
+    // const res = yield call(deleteScheduleApi, payload);
+    // if(res)
+    //     yield put(deleteSchedule(payload));
 }
 
 function* createSchedulesSaga(data) {
@@ -68,7 +88,6 @@ function* updateSchedulesSaga(data) {
     yield put(updateSchedule(res));
 }
 
-
 function forwardTo(location) {
     history.push(location);
 }
@@ -79,6 +98,7 @@ export default function* rootSaga() {
         watchSchedulesSaga(),
         watchDeleteSaga(),
         watchCreateSaga(),
-        watchUpdateSaga()
+        watchUpdateSaga(),
+        notification()
     ]);
 }
