@@ -8,7 +8,7 @@
 // }
 
  
-import { put, call, takeEvery, take, all, select, setContext, getContext } from 'redux-saga/effects';
+import { put, call, takeEvery, take, all, select, getContext } from 'redux-saga/effects';
 import { updateToken, updateSchedules, loginRequest, 
 schedulesRequest, deleteScheduleRequest, createScheduleRequest, updateScheduleRequest,
 addSchedule, updateSchedule, deleteSchedule, updateSnackbar, showNotification } from './mainReducer';
@@ -47,7 +47,7 @@ export function *notification() {
         console.log(action.payload);
         // const { msg, } = action.payload;
         const context = yield getContext("snackbar");
-        context.enqueueSnackbar(action.payload, { variant: 'error' });
+        context.enqueueSnackbar(action.payload, { variant: 'error',  autoHideDuration: 2000 });
         // yield getContext("snackbar")?.enqueueSnackbar(action.payload)
     })
 }
@@ -67,13 +67,12 @@ function* getSchedulesSaga() {
 }
 
 function* deleteSchedulesSaga(data) {
-    console.log('.');
-    yield put(showNotification('bad'))
-    // enqueueSnackbar('haha');
-    // const { payload } = data;
-    // const res = yield call(deleteScheduleApi, payload);
-    // if(res)
-    //     yield put(deleteSchedule(payload));
+    const { payload } = data;
+    const res = yield call(deleteScheduleApi, payload);
+    if(res) {
+        yield put(deleteSchedule(payload));
+        yield put(showNotification('good'))
+    }
 }
 
 function* createSchedulesSaga(data) {

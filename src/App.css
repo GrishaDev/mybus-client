@@ -6,9 +6,47 @@ html,body {
     
 }
 
+/* @keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+} */
+
 #root {
     height: 100%;
 }
+
+.card {
+  background-color: red;
+}
+
+
+.example-enter {
+  opacity: 0;
+}
+.example-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.example-exit {
+  opacity: 1;
+}
+.example-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+
+
+/* @keyframes something {
+  100% { transform: translateX(0%); }
+}
+
+.card {
+  animation: something 1s;
+} */
 
 /* width */
 ::-webkit-scrollbar {

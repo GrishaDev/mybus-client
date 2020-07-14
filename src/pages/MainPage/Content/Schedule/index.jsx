@@ -6,13 +6,15 @@ import styles from './styles';
 import IconButton from '@material-ui/core/IconButton';
 // import Icon from '@material-ui/core/Icon';
 import { Delete , Update } from '@material-ui/icons';
+import 'App.css'
 
 const useStyles = makeStyles(styles);
 
 export default ({schedule, updateSchedule, deleteSchedule}) => {
     let rule = `Rule: ${JSON.stringify(schedule.rule)}`
     const classes = useStyles();
-    
+    // const [collapse, setCollapse] = React.useState();
+
     return (
       <>
         <Paper elevation={3} className={classes.card}> 
@@ -21,7 +23,7 @@ export default ({schedule, updateSchedule, deleteSchedule}) => {
               <p> {rule}</p>
           </div>
           <div className={classes.actions}>
-            <IconButton aria-label="update" onClick={()=> updateSchedule(schedule)}>
+            <IconButton aria-label="update" onClick={()=>  updateSchedule(schedule)}>
               <Update/>
             </IconButton>
             <IconButton aria-label="delete" onClick={() => deleteSchedule(schedule)}>

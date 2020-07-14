@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+import AddForm from './AddForm';
 
 // import styles from './styles';
 
@@ -16,14 +17,17 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default ({ open, setOpen, schedule, onConfirm }) => {
+export default ({ open, setOpen, onConfirm }) => {
   // const classes = useStyles();
+
+  const [data, setData] = React.useState();
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const title = `Schedule ${schedule.id}`;
+  
+  const title = `Add new schedule`;
   return (
       <Dialog
         open={open}
@@ -35,16 +39,16 @@ export default ({ open, setOpen, schedule, onConfirm }) => {
       >
         <DialogTitle id="alert-dialog-slide-title">{title}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            {JSON.stringify(schedule)}
-          </DialogContentText>
+          {/* <DialogContentText id="alert-dialog-slide-description"> */}
+            <AddForm setData={setData}/>
+          {/* </DialogContentText> */}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             no
           </Button>
-          <Button onClick={() => onConfirm({id: '3294a', rule: {hour: 7}})} color="primary">
-            update
+          <Button onClick={() => { console.log(data); onConfirm(data) }} color="primary">
+            Add
           </Button>
         </DialogActions>
       </Dialog>

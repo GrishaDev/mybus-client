@@ -1,5 +1,6 @@
 import axios from 'axios';
 import config from 'config';
+import shortid from "shortid";
 
 // httpsAgent: new https.Agent({  
 //     rejectUnauthorized: false
@@ -30,7 +31,7 @@ const getSchedulesApi = async (mail) => {
 }
 
 const createScheduleApi = async (data) => {
-    if(config.isMock) return create;
+    if(config.isMock) return {id: shortid.generate(), mail: "bla213bla@bla.com", rule: {hour: 52, minute: 5}};;
     const res = await request.post(`schedule`, data).catch(err => console.log(err));
     return res;
 }

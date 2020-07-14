@@ -2,7 +2,9 @@ import  React,  { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import { schedulesRequest, deleteScheduleRequest, createScheduleRequest, updateScheduleRequest, updateSnackbar } from 'stateStuff/mainReducer';
+import { Flipper, Flipped } from "react-flip-toolkit";
+import { schedulesRequest, deleteScheduleRequest, updateScheduleRequest, updateSnackbar } from 'stateStuff/mainReducer';
+import 'App.css'
 import styles from './styles';
 import Schedule from './Schedule';
 import UpdateDialog from './Dialog';
@@ -10,10 +12,12 @@ import DeleteDialog from 'components/DeleteConfirm';
 
 const useStyles = makeStyles(styles);
 
-const MainPage = ({getSchedules, updateSchedule, deleteSchedule, createSchedule, schedules, updateSnackbar}) => {
+const MainPage = ({getSchedules, updateSchedule, deleteSchedule, schedules, updateSnackbar}) => {
     const classes = useStyles();
     const snackbar = useSnackbar();
 
+   
+    
     useEffect(()=> {
         console.log('make request');
         getSchedules()
@@ -50,13 +54,21 @@ const MainPage = ({getSchedules, updateSchedule, deleteSchedule, createSchedule,
     // }
 
     let schedulesArr = schedules;
-    let cards = schedulesArr.map((item) => <Schedule key={item.id} schedule={item} updateSchedule={handleOpenUpdate} deleteSchedule={handleOpenDelete}/>);
+    let cards = schedulesArr.map((item) =>
+      <Flipped flipId={item.id} key={item.id}>
+        <div><Schedule schedule={item} updateSchedule={handleOpenUpdate} deleteSchedule={handleOpenDelete}/></div>
+      </Flipped>);
     
+    console.log(cards.length);
+
     return (
       <>
-        <div className={classes.content}>
-            {cards}
-        </div>
+        <Flipper flipKey={cards.length}>
+            <div className={classes.content}>
+                  {cards}
+            </div>
+        </Flipper>
+
         <UpdateDialog open={openUpdate} schedule={currentSchedule} setOpen={setOpenUpdate} onConfirm={handleConfirmUpdate}/>
         <DeleteDialog open={openDelete} setOpen={setOpenDelete} item={currentSchedule} onConfirm={handleConfirmDelete}/>
       </>
