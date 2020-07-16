@@ -37,14 +37,11 @@ export function* watchUpdateSaga() {
 
 export function *notification() {
     yield takeEvery(updateSnackbar, function* (action) {
-        console.log('...');
-        console.log(action.payload);
         // yield setContext({snackbar: action.payload})
         const snackbar = yield getContext("snackbar");
         Object.assign(snackbar, action.payload);
     })
     yield takeEvery(showNotification, function* (action) {
-        console.log(action.payload);
         // const { msg, } = action.payload;
         const context = yield getContext("snackbar");
         context.enqueueSnackbar(action.payload, { variant: 'error',  autoHideDuration: 2000 });

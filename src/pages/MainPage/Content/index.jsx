@@ -7,11 +7,13 @@ import { schedulesRequest, deleteScheduleRequest, updateScheduleRequest, updateS
 import 'App.css'
 import styles from './styles';
 import Schedule from './Schedule';
-import UpdateDialog from './Dialog';
+import UpdateDialog from './UpdateDialog';
 import DeleteDialog from 'components/DeleteConfirm';
+import ViewSchedule from './ViewSchedule';
 
 const useStyles = makeStyles(styles);
 
+let currentSchedule;
 const MainPage = ({getSchedules, updateSchedule, deleteSchedule, schedules, updateSnackbar}) => {
     const classes = useStyles();
     const snackbar = useSnackbar();
@@ -19,7 +21,6 @@ const MainPage = ({getSchedules, updateSchedule, deleteSchedule, schedules, upda
    
     
     useEffect(()=> {
-        console.log('make request');
         getSchedules()
     },[getSchedules]);
 
@@ -29,16 +30,25 @@ const MainPage = ({getSchedules, updateSchedule, deleteSchedule, schedules, upda
   
     const [openUpdate, setOpenUpdate] = React.useState(false);
     const [openDelete, setOpenDelete] = React.useState(false);
-    const [currentSchedule, setCurrentSchedule] = React.useState({id: 'retarded  react'});
+    const [openView, setOpenView] = React.useState(false);
+    // const [currentSchedule, setCurrentSchedule] = React.useState();
 
     const handleOpenUpdate = (schedule) => {
+      currentSchedule = schedule;
       setOpenUpdate(true);
-      setCurrentSchedule(schedule);
+      // setCurrentSchedule(schedule);
     }
     const handleOpenDelete = (schedule) => {
+      currentSchedule = schedule;
       setOpenDelete(true);
-      setCurrentSchedule(schedule);
+      // setCurrentSchedule(schedule);
     }
+    const handleOpenView = (schedule) => {
+      currentSchedule = schedule;
+      setOpenView(true);
+      // setCurrentSchedule(schedule);
+    }
+
     const handleConfirmDelete = () => {
       deleteSchedule(currentSchedule.id);
       setOpenDelete(false);
@@ -49,17 +59,11 @@ const MainPage = ({getSchedules, updateSchedule, deleteSchedule, schedules, upda
       setOpenUpdate(false);
     }
 
-    // if(error) {
-    //   enqueueSnackbar('error');
-    // }
-
     let schedulesArr = schedules;
     let cards = schedulesArr.map((item) =>
       <Flipped flipId={item.id} key={item.id}>
-        <div><Schedule schedule={item} updateSchedule={handleOpenUpdate} deleteSchedule={handleOpenDelete}/></div>
+        <div onClick={()=>handleOpenView(item)}><Schedule schedule={item} updateSchedule={handleOpenUpdate} deleteSchedule={handleOpenDelete}/></div>
       </Flipped>);
-    
-    console.log(cards.length);
 
     return (
       <>
@@ -71,6 +75,7 @@ const MainPage = ({getSchedules, updateSchedule, deleteSchedule, schedules, upda
 
         <UpdateDialog open={openUpdate} schedule={currentSchedule} setOpen={setOpenUpdate} onConfirm={handleConfirmUpdate}/>
         <DeleteDialog open={openDelete} setOpen={setOpenDelete} item={currentSchedule} onConfirm={handleConfirmDelete}/>
+        <ViewSchedule open={openView} setOpen={setOpenView} schedule={currentSchedule} />
       </>
     )
 }

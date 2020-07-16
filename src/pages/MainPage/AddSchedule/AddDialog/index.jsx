@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 // import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-import AddForm from './AddForm';
+import AddForm from 'components/ScheduleForm';
 
 // import styles from './styles';
 
@@ -20,17 +20,33 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default ({ open, setOpen, onConfirm }) => {
   // const classes = useStyles();
 
-  const [data, setData] = React.useState();
+  const [data, setData] = React.useState({mail: 'loggedin@user.com'});
+  const [error, setError] = React.useState(true);
+
+  useEffect(()=> {
+    setData({mail: 'loggedin@user.com'});
+  },[open])
 
   const handleClose = () => {
     setOpen(false);
   };
 
+  const handleNewData = (data) => {
+
+    if(!data.mail || !data.bus || !data.station || !data.rule?.hour || !data.rule?.minute) {
+      setError(true);
+    }
+    else setError(false);
+
+    setData(data);
+  }
   
   const title = `Add new schedule`;
   return (
       <Dialog
         open={open}
+        disableBackdropClick
+        disableEscapeKeyDown
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
@@ -39,15 +55,13 @@ export default ({ open, setOpen, onConfirm }) => {
       >
         <DialogTitle id="alert-dialog-slide-title">{title}</DialogTitle>
         <DialogContent>
-          {/* <DialogContentText id="alert-dialog-slide-description"> */}
-            <AddForm setData={setData}/>
-          {/* </DialogContentText> */}
+            <AddForm data={data} setData={handleNewData}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             no
           </Button>
-          <Button onClick={() => { console.log(data); onConfirm(data) }} color="primary">
+          <Button onClick={() => { onConfirm(data) }} color="primary" disabled={error}>
             Add
           </Button>
         </DialogActions>

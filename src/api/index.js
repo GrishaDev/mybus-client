@@ -12,7 +12,7 @@ const request = axios.create({
 
 const mockSchedules = [
     {id: '3294a', mail: "blabla@bla.com", rule: {hour: 5, minute: 5}},
-    {id: '3294b', mail: "blabla@bla.com", rule: {hour: 5, minute: 5}}
+    {id: '3294b', mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}}
 ]
 
 const create = {id: '223', mail: "bla213bla@bla.com", rule: {hour: 52, minute: 5}};
