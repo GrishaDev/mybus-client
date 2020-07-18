@@ -8,10 +8,10 @@
 // }
 
  
-import { put, call, takeEvery, take, all, select, getContext } from 'redux-saga/effects';
+import { put, call, takeEvery, all, select, getContext } from 'redux-saga/effects';
 import { updateToken, updateSchedules, loginRequest, 
 schedulesRequest, deleteScheduleRequest, createScheduleRequest, updateScheduleRequest,
-addSchedule, updateSchedule, deleteSchedule, updateSnackbar, showNotification } from './mainReducer';
+addSchedule, updateSchedule, deleteSchedule, updateSnackbar, showErrorAlert, showSuccessAlert, setDialogStatus } from './mainReducer';
 import { loginApi, getSchedulesApi, createScheduleApi, updateScheduleApi, deleteScheduleApi } from 'api';
 import history from 'utils/history';
 
@@ -37,15 +37,16 @@ export function* watchUpdateSaga() {
 
 export function *notification() {
     yield takeEvery(updateSnackbar, function* (action) {
-        // yield setContext({snackbar: action.payload})
         const snackbar = yield getContext("snackbar");
         Object.assign(snackbar, action.payload);
     })
-    yield takeEvery(showNotification, function* (action) {
-        // const { msg, } = action.payload;
+    yield takeEvery(showErrorAlert, function* (action) {
         const context = yield getContext("snackbar");
         context.enqueueSnackbar(action.payload, { variant: 'error',  autoHideDuration: 2000 });
-        // yield getContext("snackbar")?.enqueueSnackbar(action.payload)
+    })
+    yield takeEvery(showSuccessAlert, function* (action) {
+        const context = yield getContext("snackbar");
+        context.enqueueSnackbar(action.payload, { variant: 'success',  autoHideDuration: 2000 });
     })
 }
 
@@ -59,30 +60,61 @@ function* loginSaga(data) {
 
 function* getSchedulesSaga() {
     const { mail } = yield select();
-    const schedules = yield call(getSchedulesApi, mail);
-    yield put(updateSchedules(schedules));
+    try {
+        const schedules = yield call(getSchedulesApi, mail);
+        yield put(updateSchedules(schedules));
+        yield put(showSuccessAlert(`Got Schedules`))
+    }
+    catch(err) {
+        yield put(showErrorAlert('Cant get schedules from server'));
+        console.log(err);
+    }
 }
 
 function* deleteSchedulesSaga(data) {
     const { payload } = data;
-    const res = yield call(deleteScheduleApi, payload);
-    if(res) {
+    try { 
+        yield call(deleteScheduleApi, payload);
         yield put(deleteSchedule(payload));
-        yield put(showNotification('good'))
+        yield put(showSuccessAlert(`Deleted`))
+    }
+    catch(err) {
+        yield put(showErrorAlert('Failed deleting'));
+        console.log(err);
     }
 }
 
 function* createSchedulesSaga(data) {
     const { payload } = data;
-    const res = yield call(createScheduleApi, payload);
-    yield put(addSchedule(res));
+    try { 
+        const res = yield call(createScheduleApi, payload);
+        yield put(addSchedule(res));
+        yield put(showSuccessAlert('Created'));
+        yield put (setDialogStatus({success: true, error: null}));
+    }
+    catch(err) {
+        yield put(showErrorAlert('Failed creating'));
+        yield put (setDialogStatus({success: false, error: err}));
+        console.log(err);
+    }
 }
 
 function* updateSchedulesSaga(data) {
     const { payload } = data;
-    const res = yield call(updateScheduleApi, payload.id, payload.data);
-    yield put(updateSchedule(res));
+    try {
+        const res = yield call(updateScheduleApi, payload.id, payload.data);
+        yield put(updateSchedule(res));
+        yield put(showSuccessAlert('Updated'));
+        yield put (setDialogStatus({success: true, error: null}));
+    }
+    catch(err) {
+        yield put(showErrorAlert('Failed updating'));
+        yield put (setDialogStatus({success: false, error: err}));
+        console.log(err);
+    }
 }
+    
+    
 
 function forwardTo(location) {
     history.push(location);

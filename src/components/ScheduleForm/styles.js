@@ -1,5 +1,3 @@
-import { FullscreenExit } from "@material-ui/icons";
-
 export default {
     form: {
         padding: '10px',

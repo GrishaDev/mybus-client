@@ -14,23 +14,36 @@ import ViewSchedule from './ViewSchedule';
 const useStyles = makeStyles(styles);
 
 let currentSchedule;
-const MainPage = ({getSchedules, updateSchedule, deleteSchedule, schedules, updateSnackbar}) => {
+const MainPage = ({dialogStatus, getSchedules, updateSchedule, deleteSchedule, schedules, updateSnackbar}) => {
     const classes = useStyles();
     const snackbar = useSnackbar();
 
-   
-    
+    const [dialogError, setDialogError] = React.useState();
+    const [openUpdate, setOpenUpdate] = React.useState(false);
+    const [openDelete, setOpenDelete] = React.useState(false);
+    const [openView, setOpenView] = React.useState(false);
+
+    useEffect(()=> {
+      if(dialogStatus?.success) {
+        setOpenUpdate(false);
+        setDialogError(null);
+      }
+  
+      if(dialogStatus && !dialogStatus.success) {
+        setDialogError(String(dialogStatus.error));
+      }
+    },[dialogStatus])
+
     useEffect(()=> {
         getSchedules()
     },[getSchedules]);
 
     useEffect(() => {
+      console.log('test')
       updateSnackbar(snackbar) 
     }, [snackbar])
   
-    const [openUpdate, setOpenUpdate] = React.useState(false);
-    const [openDelete, setOpenDelete] = React.useState(false);
-    const [openView, setOpenView] = React.useState(false);
+    
     // const [currentSchedule, setCurrentSchedule] = React.useState();
 
     const handleOpenUpdate = (schedule) => {
@@ -56,7 +69,7 @@ const MainPage = ({getSchedules, updateSchedule, deleteSchedule, schedules, upda
 
     const handleConfirmUpdate = (data) => {
       updateSchedule(data);
-      setOpenUpdate(false);
+      // setOpenUpdate(false);
     }
 
     let schedulesArr = schedules;
@@ -73,7 +86,7 @@ const MainPage = ({getSchedules, updateSchedule, deleteSchedule, schedules, upda
             </div>
         </Flipper>
 
-        <UpdateDialog open={openUpdate} schedule={currentSchedule} setOpen={setOpenUpdate} onConfirm={handleConfirmUpdate}/>
+        <UpdateDialog open={openUpdate} schedule={currentSchedule} setOpen={setOpenUpdate} onConfirm={handleConfirmUpdate} dialogError={dialogError} />
         <DeleteDialog open={openDelete} setOpen={setOpenDelete} item={currentSchedule} onConfirm={handleConfirmDelete}/>
         <ViewSchedule open={openView} setOpen={setOpenView} schedule={currentSchedule} />
       </>
@@ -81,6 +94,7 @@ const MainPage = ({getSchedules, updateSchedule, deleteSchedule, schedules, upda
 }
 
 const mapStateToProps = state => ({
+    dialogStatus: state.dialogStatus,
     schedules: state.schedules,
   });
   

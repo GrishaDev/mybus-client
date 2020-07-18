@@ -7,11 +7,12 @@ import IconButton from '@material-ui/core/IconButton';
 // import Icon from '@material-ui/core/Icon';
 import { Delete , Update } from '@material-ui/icons';
 import 'App.css'
+import ruleConverter from 'utils/ruleConverter';
 
 const useStyles = makeStyles(styles);
 
 export default ({schedule, updateSchedule, deleteSchedule}) => {
-    let rule = `Rule: ${JSON.stringify(schedule.rule)}`
+    let rule = `Time: ${ruleConverter(schedule.rule)}`
     const classes = useStyles();
     // const [collapse, setCollapse] = React.useState();
 

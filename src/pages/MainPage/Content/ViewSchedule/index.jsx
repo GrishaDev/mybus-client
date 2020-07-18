@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,6 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 
 import styles from './styles';
+import ruleConverter from 'utils/ruleConverter';
 
 const useStyles = makeStyles(styles);
 
@@ -30,9 +31,10 @@ export default ({ open, setOpen, schedule }) => {
   if(schedule) {
     let keys = Object.keys(schedule);
     let values = Object.values(schedule);
-    items = values.map((item,index)=> 
-        <div key={index} className={classes.item}>{`${keys[index]}: ${JSON.stringify(item)}`}</div>
-    )
+    items = values.map((item,index)=> {
+        let text = keys[index] === 'rule' ? ruleConverter(item) : item;
+        return <div key={index} className={classes.item}>{`${keys[index]}: ${text}`}</div>
+    })
   }
   return (
       <Dialog
@@ -43,7 +45,7 @@ export default ({ open, setOpen, schedule }) => {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">{title}</DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title" className={classes.center}>{title}</DialogTitle>
         <DialogContent className={classes.content}>
           {/* {JSON.stringify(schedule)} */}
           {items}

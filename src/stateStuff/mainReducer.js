@@ -10,10 +10,10 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     mail: '',
     token: '',
-    error: null,
+    dialogStatus: null,
     schedules: [
-        {id: '3294a', mail: "blabla@bla.com", rule: {hour: 5, minute: 5}},
-        {id: '3294b', mail: "blabla@bla.com", rule: {hour: 5, minute: 5}}
+        // {id: '3294a', mail: "blabla@bla.com", rule: {hour: 5, minute: 5}},
+        // {id: '3294b', mail: "blabla@bla.com", rule: {hour: 5, minute: 5}}
     ]
 };
 
@@ -45,12 +45,12 @@ const myschedules = createSlice({
         loginRequest: (state, action) => {
             state.mail = action.payload;
         },
-        createError: (state, action) => {
-            state.error = 'error';
-            state.error = null;
+        setDialogStatus: (state, action) => {
+            state.dialogStatus = action.payload;
         },
         updateSnackbar() {},
-        showNotification() {},
+        showErrorAlert() {},
+        showSuccessAlert() {},
         schedulesRequest() {},
         deleteScheduleRequest() {},
         createScheduleRequest() {},
@@ -65,9 +65,10 @@ export const {
     updateSchedule,
     deleteSchedule,
     loginRequest,
-    createError,
+    setDialogStatus,
     updateSnackbar,
-    showNotification,
+    showErrorAlert,
+    showSuccessAlert,
     schedulesRequest,
     deleteScheduleRequest,
     createScheduleRequest,

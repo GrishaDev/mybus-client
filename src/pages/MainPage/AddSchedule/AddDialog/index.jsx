@@ -1,24 +1,24 @@
 import React, {useEffect} from 'react';
-// import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
+// import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import AddForm from 'components/ScheduleForm';
 
-// import styles from './styles';
+import styles from './styles';
 
-// const useStyles = makeStyles(styles);
+const useStyles = makeStyles(styles);
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default ({ open, setOpen, onConfirm }) => {
-  // const classes = useStyles();
+export default ({ dialogError, open, setOpen, onConfirm }) => {
+  const classes = useStyles();
 
   const [data, setData] = React.useState({mail: 'loggedin@user.com'});
   const [error, setError] = React.useState(true);
@@ -56,6 +56,7 @@ export default ({ open, setOpen, onConfirm }) => {
         <DialogTitle id="alert-dialog-slide-title">{title}</DialogTitle>
         <DialogContent>
             <AddForm data={data} setData={handleNewData}/>
+            <div className={classes.error}> {dialogError} </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

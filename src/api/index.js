@@ -20,31 +20,31 @@ const update = {id: '3294a', mail: "bla213bla@bla.com", rule: {hour: 52, minute:
 
 const loginApi = async (data) => {
     if(config.isMock) return '392A8349ABs9359SA';
-    const res = await request.post('login', data).catch(err => console.log(err));
+    const res = await request.post('login', data).catch(err => { throw new Error(err) });
     return res;
 }
 
 const getSchedulesApi = async (mail) => {
     if(config.isMock) return mockSchedules;
-    const res = await request.get(`schedules/mail/${mail}`).catch(err => console.log(err));
+    const res = await request.get(`schedules/mail/${mail}`).catch(err => { throw new Error(err) });
     return res;
 }
 
 const createScheduleApi = async (data) => {
-    if(config.isMock) return {id: shortid.generate(), mail: "bla213bla@bla.com", rule: {hour: 52, minute: 5}};;
-    const res = await request.post(`schedule`, data).catch(err => console.log(err));
+    if(config.isMock) return {id: shortid.generate(), mail: "bla213bla@bla.com", rule: {hour: 52, minute: 5}};
+    const res = await request.post(`schedule`, data).catch(err => { throw new Error(err) });
     return res;
 }
 
 const updateScheduleApi = async (id, data) => {
     if(config.isMock) return update;
-    const res = await request.put(`schedule/${id}`, data).catch(err => console.log(err));
+    const res = await request.put(`schedule/${id}`, data).catch(err => { throw new Error(err) });
     return res;
 }
 
 const deleteScheduleApi = async (id) => {
     if(config.isMock) return true;
-    const res = await request.delete(`schedule/${id}`).catch(err => console.log(err));
+    const res = await request.delete(`schedule/${id}`).catch(err => { throw new Error(err) });
     return res;
 }
 
