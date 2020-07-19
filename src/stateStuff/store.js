@@ -1,6 +1,9 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import mainReducer, { updateSnackbar, setDialogStatus } from './mainReducer';
+import mainReducer from './mainReducer';
+import  { updateSnackbar } from './reducers/requestsReducer';
+import  { setDialogStatus } from './reducers/formReducer';
+
 import mainSaga from './mainSaga';
  
 const sagaMiddleware = createSagaMiddleware({context: {snackbar: {}}});

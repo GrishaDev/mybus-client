@@ -1,78 +1,82 @@
-// import { combineReducers } from 'redux';
-// import somethingReducer from './something/somethingReducer';
+import { combineReducers } from 'redux';
+import formReducer from './reducers/formReducer';
+import requestsReducer from './reducers/requestsReducer';
+import schedulesReducer from './reducers/schedulesReducer';
 
-// export default combineReducers({
-//   something: somethingReducer,
-// });
+export default combineReducers({
+  form: formReducer,
+  requests: requestsReducer,
+  myschedules: schedulesReducer
+});
 
-import { createSlice } from '@reduxjs/toolkit';
+// import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-    mail: '',
-    token: '',
-    dialogStatus: null,
-    schedules: [
-        // {id: '3294a', mail: "blabla@bla.com", rule: {hour: 5, minute: 5}},
-        // {id: '3294b', mail: "blabla@bla.com", rule: {hour: 5, minute: 5}}
-    ]
-};
+// const initialState = {
+//     mail: '',
+//     token: '',
+//     dialogStatus: null,
+//     schedules: [
+//         // {id: '3294a', mail: "blabla@bla.com", rule: {hour: 5, minute: 5}},
+//         // {id: '3294b', mail: "blabla@bla.com", rule: {hour: 5, minute: 5}}
+//     ]
+// };
 
 
-const myschedules = createSlice({
-    name: 'myschedules',
-    initialState,
-    reducers: {
-        updateToken: (state, action) => {
-            state.token = action.payload;
-        },
-        updateSchedules: (state, action) => {
-            const { payload } = action;
-            state.schedules = payload;
-        },
-        addSchedule: (state, action) => {
-            state.schedules.push(action.payload);
-        },
-        updateSchedule: (state, action) => {
-            const { id } = action.payload;
-            console.log(id);
-            let index = state.schedules.findIndex((item)=> item.id === id);
-            state.schedules[index] = action.payload;
-        },
-        deleteSchedule: (state, action) => {
-            let index = state.schedules.findIndex((item)=> item.id === action.payload);
-            state.schedules.splice(index,1);
-        },
-        loginRequest: (state, action) => {
-            state.mail = action.payload;
-        },
-        setDialogStatus: (state, action) => {
-            state.dialogStatus = action.payload;
-        },
-        updateSnackbar() {},
-        showErrorAlert() {},
-        showSuccessAlert() {},
-        schedulesRequest() {},
-        deleteScheduleRequest() {},
-        createScheduleRequest() {},
-        updateScheduleRequest() {},
-    }
-})
+// const myschedules = createSlice({
+//     name: 'myschedules',
+//     initialState,
+//     reducers: {
+//         updateToken: (state, action) => {
+//             state.token = action.payload;
+//         },
+//         updateSchedules: (state, action) => {
+//             const { payload } = action;
+//             state.schedules = payload;
+//         },
+//         addSchedule: (state, action) => {
+//             state.schedules.push(action.payload);
+//         },
+//         updateSchedule: (state, action) => {
+//             const { id } = action.payload;
+//             console.log(id);
+//             let index = state.schedules.findIndex((item)=> item.id === id);
+//             state.schedules[index] = action.payload;
+//         },
+//         deleteSchedule: (state, action) => {
+//             let index = state.schedules.findIndex((item)=> item.id === action.payload);
+//             state.schedules.splice(index,1);
+//         },
+//         loginRequest: (state, action) => {
+//             state.mail = action.payload;
+//         },
+//         setDialogStatus: (state, action) => {
+//             state.dialogStatus = action.payload;
+//         },
+//         updateSnackbar() {},
+//         showErrorAlert() {},
+//         showSuccessAlert() {},
+//         schedulesRequest() {},
+//         deleteScheduleRequest() {},
+//         createScheduleRequest() {},
+//         updateScheduleRequest() {},
+//     }
+// })
 
-export const {
-    updateToken,
-    updateSchedules,
-    addSchedule,
-    updateSchedule,
-    deleteSchedule,
-    loginRequest,
-    setDialogStatus,
-    updateSnackbar,
-    showErrorAlert,
-    showSuccessAlert,
-    schedulesRequest,
-    deleteScheduleRequest,
-    createScheduleRequest,
-    updateScheduleRequest
-} = myschedules.actions;
+// export const {
+//     updateToken,
+//     updateSchedules,
+//     addSchedule,
+//     updateSchedule,
+//     deleteSchedule,
+//     loginRequest,
+//     setDialogStatus,
+//     updateSnackbar,
+//     showErrorAlert,
+//     showSuccessAlert,
+//     schedulesRequest,
+//     deleteScheduleRequest,
+//     createScheduleRequest,
+//     updateScheduleRequest
+// } = myschedules.actions;
 
-export default myschedules.reducer;
+// export default myschedules.reducer;

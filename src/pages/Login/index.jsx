@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { loginRequest } from 'stateStuff/mainReducer';
+import { loginRequest } from 'stateStuff/reducers/schedulesReducer';
 
 const LoginPage = (props) => {
     const [mail, setMail] = useState('');

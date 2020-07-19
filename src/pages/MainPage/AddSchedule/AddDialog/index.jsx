@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 // import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-import AddForm from 'components/ScheduleForm';
+import ScheduleForm from 'components/ScheduleForm';
 
 import styles from './styles';
 
@@ -55,7 +55,7 @@ export default ({ dialogError, open, setOpen, onConfirm }) => {
       >
         <DialogTitle id="alert-dialog-slide-title">{title}</DialogTitle>
         <DialogContent>
-            <AddForm data={data} setData={handleNewData}/>
+            <ScheduleForm/>
             <div className={classes.error}> {dialogError} </div>
         </DialogContent>
         <DialogActions>

@@ -27,8 +27,6 @@ export default ({ dialogError, open, setOpen, schedule, onConfirm }) => {
   },[schedule])
 
   
-
-  
   const [error, setError] = React.useState(true);
 
   const handleClose = () => {
