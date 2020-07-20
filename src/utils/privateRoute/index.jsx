@@ -19,7 +19,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 }
 
 const mapStateToProps = state => ({
-    token: state.token
+    token: state.myschedules.token
 });
   
 const connectedPrivateRoute = connect(

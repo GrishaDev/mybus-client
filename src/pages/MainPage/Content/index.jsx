@@ -3,41 +3,26 @@ import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { Flipper, Flipped } from "react-flip-toolkit";
-// import { schedulesRequest, deleteScheduleRequest, updateScheduleRequest, updateSnackbar } from 'stateStuff/mainReducer';
-import { schedulesRequest, deleteScheduleRequest, updateScheduleRequest, updateSnackbar } from 'stateStuff/reducers/requestsReducer';
-// import { updateSnackbar } from 'stateStuff/reducers/schedulesReducer';
+import { schedulesRequest, deleteScheduleRequest, updateSnackbar } from 'stateStuff/reducers/requestsReducer';
 import 'App.css'
 import styles from './styles';
 import Schedule from './Schedule';
-import UpdateDialog from './UpdateDialog';
 import DeleteDialog from 'components/DeleteConfirm';
 import ViewSchedule from './ViewSchedule';
+import DataDialog from 'components/dataDialog';
 import activateNotifications from 'workMaker';
 
 const useStyles = makeStyles(styles);
 
-let currentSchedule;
-
-const MainPage = ({dialogStatus, getSchedules, updateSchedule, deleteSchedule, schedules, updateSnackbar}) => {
+const MainPage = ({getSchedules, deleteSchedule, schedules, updateSnackbar}) => {
     const classes = useStyles();
     const snackbar = useSnackbar();
 
-    const [dialogError, setDialogError] = React.useState();
+    // const [dialogError, setDialogError] = React.useState();
     const [openUpdate, setOpenUpdate] = React.useState(false);
     const [openDelete, setOpenDelete] = React.useState(false);
     const [openView, setOpenView] = React.useState(false);
-
-    useEffect(()=> {
-      if(dialogStatus?.success) {
-        setOpenUpdate(false);
-        setDialogError(null);
-      }
-  
-      if(dialogStatus && !dialogStatus.success) {
-        setDialogError(String(dialogStatus.error));
-      }
-    },[dialogStatus])
-
+    const [currentSchedule, setCurrentSchedule] = React.useState();
 
     // Get new schedule cards everytime they change
     useEffect(()=> {
@@ -49,22 +34,18 @@ const MainPage = ({dialogStatus, getSchedules, updateSchedule, deleteSchedule, s
     useEffect(() => {
       updateSnackbar(snackbar) 
     }, [snackbar])
-  
-    
-    // const [currentSchedule, setCurrentSchedule] = React.useState();
 
     const handleOpenUpdate = (schedule) => {
-      currentSchedule = schedule;
+      setCurrentSchedule(schedule);
+      console.log(currentSchedule);
       setOpenUpdate(true);
-      // setCurrentSchedule(schedule);
     }
     const handleOpenDelete = (schedule) => {
-      currentSchedule = schedule;
+      setCurrentSchedule(schedule);
       setOpenDelete(true);
-      // setCurrentSchedule(schedule);
     }
     const handleOpenView = async (schedule) => {
-      currentSchedule = schedule;
+      setCurrentSchedule(schedule);
       setOpenView(true);
 
       // const haha = await activateNotifications();
@@ -77,11 +58,6 @@ const MainPage = ({dialogStatus, getSchedules, updateSchedule, deleteSchedule, s
     const handleConfirmDelete = () => {
       deleteSchedule(currentSchedule.id);
       setOpenDelete(false);
-    }
-
-    const handleConfirmUpdate = (data) => {
-      updateSchedule(data);
-      // setOpenUpdate(false);
     }
 
     let schedulesArr = schedules;
@@ -98,7 +74,7 @@ const MainPage = ({dialogStatus, getSchedules, updateSchedule, deleteSchedule, s
             </div>
         </Flipper>
 
-        <UpdateDialog open={openUpdate} schedule={currentSchedule} setOpen={setOpenUpdate} onConfirm={handleConfirmUpdate} dialogError={dialogError} />
+        <DataDialog open={openUpdate} setOpen={setOpenUpdate} schedule={currentSchedule}/>
         <DeleteDialog open={openDelete} setOpen={setOpenDelete} item={currentSchedule} onConfirm={handleConfirmDelete}/>
         <ViewSchedule open={openView} setOpen={setOpenView} schedule={currentSchedule} />
       </>
@@ -106,7 +82,6 @@ const MainPage = ({dialogStatus, getSchedules, updateSchedule, deleteSchedule, s
 }
 
 const mapStateToProps = state => ({
-    dialogStatus: state.form.dialogStatus,
     schedules: state.myschedules.schedules,
   });
   
@@ -115,7 +90,6 @@ const mapStateToProps = state => ({
       updateSnackbar: (snackbar) => dispatch(updateSnackbar(snackbar)),
       getSchedules: () => dispatch(schedulesRequest()),
       deleteSchedule: (id) => dispatch(deleteScheduleRequest(id)),
-      updateSchedule: (data) => dispatch(updateScheduleRequest(data)),
     };
   }
 

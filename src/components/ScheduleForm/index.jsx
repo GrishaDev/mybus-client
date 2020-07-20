@@ -16,147 +16,90 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 const useStyles = makeStyles(styles);
 
+//eslint-disable-next-line
 const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-// let mail;
-// let bus;
-// let station;
-// let magic;
-// let spam;
-// let date;
-// let checked;
-// let hour;
-// let minute;
 
 const ScheduleForm = ({data, setMail, setBus, setStation, setTrigger, setTimes, setHour, setMinute, setChecked }) => {
     const classes = useStyles();
 
-    // useEffect(()=> {
-    //     console.log('form date updated');
-    //     console.log(data);
-    //     mail = data?.mail;
-    //     bus = data?.bus;
-    //     station = data?.station;
-    //     magic = data?.magic;
-    //     spam = data?.spam;
-    //     date = data?.date;
-    //     checked = data?.checked;
-    //     hour = data?.rule?.hour;
-    //     minute = data?.rule?.minute;
-    //     setChecked(checked || false);
-    // },[data])
-
-    // const [checkedState, setChecked] = React.useState(false);
-    // const [selectedDate, setSelectedDate] = React.useState();
-    // const [mail, setMail] = React.useState();
-    // const [bus, setBus] = React.useState();
-    // const [station, setStation] = React.useState();
-    // const [magic, setMagic] = React.useState();
-    // const [spam, setSpam] = React.useState();
     const [touchedMail, setTouchedMail] = React.useState(false);
     const [touchedBus, setTouchedBus] = React.useState(false);
     const [touchedStation, setTouchedStation] = React.useState(false);
     const [touchedHour, setTouchedHour] = React.useState(false);
     const [touchedMinute, setTouchedMinute] = React.useState(false);
+    const [advanced, setAdvanced] = React.useState(false);
 
-    
-    // const [formData, setFormData] = React.useState();
+    const handleMailChange = (e) => {
+        setTouchedMail(true);
+        let mail = e.target.value;
+        setMail(mail);
+    };
 
-    // const handleMailChange = (e) => {
-    //     setTouchedMail(true);
-    //     // setMail(mail);
-    //     mail = e.target.value;
-    //     setThings();
-    // };
+    const handleBusChange = (e) => {
+        setTouchedBus(true);
+        let bus = e.target.value;
+        setBus(bus);
+    };
 
-    // const handleBusChange = (e) => {
-    //     setTouchedBus(true);
-    //     // setBus(bus);
-    //     bus = e.target.value;
-    //     setThings();
-    // };
+    const handleStationChange = (e) => {
+        setTouchedStation(true);
+        let station = e.target.value;
+        setStation(station);
+    };
 
-    // const handleStationChange = (e) => {
-    //     setTouchedStation(true);
-    //     // setStation(station);
-    //     station = e.target.value;
-    //     setThings();
-    // };
+    const handleHourChange = (e) => {
+        setTouchedHour(true);
+        let hour = e.target.value;
+        setHour(hour);
+    };
 
-    // const handleMagicChange = (e) => {
-    //     // setMagic(magic);
-    //     magic = e.target.value;
-    //     setThings();
-    // };
-
-    // const handleSpamChange = (e) => {
-    //     // setSpam(spam);
-    //     spam = e.target.value;
-    //     setThings();
-    // };
-
-    // const handleHourChange = (e) => {
-    //     // setSpam(spam);
-    //     setTouchedHour(true);
-    //     hour = e.target.value;
-    //     setThings();
-    // };
-
-    // const handleMinuteChange = (e) => {
-    //     // setSpam(spam);
-    //     setTouchedMinute(true);
-    //     minute = e.target.value;
-    //     setThings();
-    // };
-
-    // const handleDateChange = (e) => {
-    //     const cooldate = new Date(e);
-    //     date = new Date(e);
-    //     setThings();
-    // };
-
-    // const handleCheck = (event) => {
-    //     // setChecked(event.target.checked);
-    //     checked = event.target.checked;
-    //     setChecked(checked);
-    //     setThings();
-    // };
-
-    // const setThings = () => {
-    //     // setData({mail, bus, station, magic, spam, rule: {hour: date?.getHours(), minute: date?.getMinutes()}, checked});
-    //     setData({mail, bus, station, magic, spam, rule: {hour, minute}, checked});
-
-    // }
+    const handleMinuteChange = (e) => {
+        setTouchedMinute(true);
+        let minute = e.target.value;
+        setMinute(minute);;
+    };
 
     const validateMail = () => {
         let test = re.test(String(data?.mail).toLowerCase());
-        return ((!data?.mail || !data?.test) && touchedMail);
+        return ((!data?.mail || !test) && touchedMail);
     }
 
-    const validateBus = () => {
-        // let test = isNaN(bus);
+    const validateBus = () => {;
         return (!data?.bus && touchedBus);
     }
 
     const validateStation = () => {
-        // let test = isNaN(station);
         return (!data?.station  && touchedStation);
     }
 
+    let more = [];
+    if(advanced) { 
+        more = [<TextField key={1} className={classes.fake} margin="normal"  label="trigger time" value={data?.scheduleTrigger || ''} type="number" helperText="Waits for bus to be X minutes from ur station" onChange={setTrigger}/>,
+                <TextField key={2} margin="normal" label="notificates" value={data?.times || ''} type="number" helperText="How much times to notificate?" onChange={setTimes}/>]
+    }
     return (
         <>
             <div className={classes.form}>
                 <div className={classes.fields}>
-                    <TextField error={validateMail()} margin="normal" required label="Mail" value={data?.mail || ''} helperText="" onChange={setMail}/>
-                    <TextField error={validateBus()} margin="normal" type="number" required label="bus id" value={data?.bus || ''} helperText="" onChange={setBus}/>
-                    <TextField error={validateStation()} margin="normal" type="number" required label="station id" value={data?.station || ''} helperText="" onChange={setStation}/>
-                    {/* <Divider variant="middle"/> */}
-                    <TextField margin="normal"  label="trigger time" value={data?.magic || ''} type="number" helperText="Turns into advanced mode, waits for bus to be X minutes from ur station" onChange={setTrigger}/>
-                    <TextField margin="normal" label="notificates" value={data?.spam || ''} type="number" helperText="How much times to notificate?" onChange={setTimes}/>
+                    <TextField error={validateMail()} margin="normal" required label="Mail" value={data?.mail || ''} helperText="" onChange={handleMailChange}/>
+                    <TextField error={validateBus()} margin="normal" type="number" required label="bus id" value={data?.bus || ''} helperText="" onChange={handleBusChange}/>
+                    <TextField error={validateStation()} margin="normal" type="number" required label="station id" value={data?.station || ''} helperText="" onChange={handleStationChange}/>
+                    {/* <div></div> */}
+                    <div className={classes.fake}></div>
+                    <TextField error={!data?.hour && touchedHour} margin="normal" label="Hour" required value={data?.hour || ''} type="number" helperText="" onChange={handleHourChange}/>
+                    <TextField error={!data?.minute && touchedMinute} margin="normal" label="Minute" required value={data?.minute || ''} type="number" helperText="" onChange={handleMinuteChange}/>
                     
-                    <div></div>
-                    <TextField error={!data?.hour && touchedHour} margin="normal" label="Hour" required value={data?.rule?.hour || ''} type="number" helperText="" onChange={setHour}/>
-                    <TextField error={!data?.minute && touchedMinute} margin="normal" label="Minute" required value={data?.rule?.minute || ''} type="number" helperText="" onChange={setMinute}/>
+                    <div className={classes.tick}>
+                        <Checkbox
+                            checked={advanced}
+                            onChange={()=> setAdvanced(!advanced)}
+                            color="primary"
+                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
+                        advanced?
+                    </div>
+                    {more}
+                              
                 </div>
                 <div className={classes.tick}> 
                     <Checkbox
@@ -179,13 +122,13 @@ const mapStateToProps = state => ({
   
   const mapDispatchToProps = dispatch => {
     return {
-      setMail: (e) => dispatch(setMail(e.target.value)),
-      setBus: (e) => dispatch(setBus(e.target.value)),
-      setStation: (e) => dispatch(setStation(e.target.value)),
+      setMail: (e) => dispatch(setMail(e)),
+      setBus: (e) => dispatch(setBus(e)),
+      setStation: (e) => dispatch(setStation(e)),
       setTrigger: (e) => dispatch(setTrigger(e.target.value)),
       setTimes: (e) => dispatch(setTimes(e.target.value)),
-      setHour: (e) => dispatch(setHour(e.target.value)),
-      setMinute: (e) => dispatch(setMinute(e.target.value)),
+      setHour: (e) => dispatch(setHour(e)),
+      setMinute: (e) => dispatch(setMinute(e)),
       setChecked: (e) => dispatch(setChecked(e.target.checked)),
     };
   }
