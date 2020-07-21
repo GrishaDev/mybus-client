@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createScheduleRequest, updateScheduleRequest } from 'stateStuff/reducers/requestsReducer';
-import {
-    setMail, setBus, setStation, setTrigger, setTimes, setHour, setMinute,
-    setChecked
-} from 'stateStuff/reducers/formReducer';
+// import {
+//     setMail, setBus, setStation, setTrigger, setTimes, setHour, setMinute,
+//     setChecked
+// } from 'stateStuff/reducers/formReducer';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -24,11 +24,20 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 // if schedule === null then its add dialog  , otherwise its update dialog.
-const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, allFields, dialogStatus, loggedInMail, buttonDisabled,
-    setMail, setBus, setStation, setTrigger, setTimes, setHour, setMinute, setChecked }) => {
+const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, dialogStatus, loggedInMail }) => {
     const classes = useStyles();
 
     const [dialogError, setDialogError] = React.useState(null);
+    const [form, setForm] = React.useState({
+        confirmDisabled: true,
+        mail: {touched: false, value: ''},
+        bus: {touched: false, value: ''},
+        station: {touched: false, value: ''},
+        trigger: {touched: false, value: ''},
+        times: {touched: false, value: ''},
+        hour: {touched: false, value: ''},
+        minute: {touched: false, value: ''},
+        checked: {touched: false, value: false}})
 
     useEffect(() => {
         if (dialogStatus?.success) {
@@ -43,17 +52,25 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, a
 
     useEffect(() => {
         if (schedule) {
-            setMail(schedule?.mail);
-            setBus(schedule?.bus);
-            setStation(schedule?.station);
-            setTrigger(schedule?.scheduleTrigger);
-            setTimes(schedule?.times);
-            setHour(schedule?.rule?.hour);
-            setMinute(schedule?.rule?.minute);
-            setChecked(schedule?.checked);
+            setForm({...form, mail: {touched: false, value: schedule?.mail || '' },
+                hour: {touched: false, value: schedule?.rule?.hour || '' },
+                minute: {touched: false, value: schedule?.rule?.minute || '' },
+                bus: {touched: false, value: schedule?.bus || ''},
+                station: {touched: false, value: schedule?.station || ''},
+                trigger: {touched: false, value: schedule?.trigger || '' },
+                times: {touched: false, value: schedule?.times || '' },
+                checked: {touched: false, value: schedule?.checked || false }});
         }
         else {
-            setMail(loggedInMail);
+            setForm({...form, mail: {touched: false, value: loggedInMail },
+                hour: {touched: false, value: '' },
+                minute: {touched: false, value: '' },
+                bus: {touched: false, value: ''},
+                station: {touched: false, value: ''},
+                trigger: {touched: false, value: '' },
+                times: {touched: false, value: '' },
+                checked: {touched: false, value: false }});
+
         }
     }, [open])
 
@@ -62,9 +79,9 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, a
     };
 
     const confirm = () => {
-        let { mail, bus, station, magic, spam, hour, minute, checked } = allFields;
-        const rule  = {hour, minute};
-        const data = {mail, bus, station, rule, magic, spam , checked}
+        let { mail, bus, station, trigger, times, hour, minute, checked } = form;
+        const rule  = {hour: hour.value , minute: minute.value};
+        const data = {mail: mail.value, bus: bus.value, station: station.value, rule, trigger: trigger.value, times: times.value, checked: checked.value}
         Object.keys(data).forEach(key => !data[key] ? delete data[key] : {})
         console.log(data);
 
@@ -73,6 +90,8 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, a
         else
             updateSchedule(data);
     }
+
+    const isBad = () => (!form.mail.value || !form.bus.value || !form.station.value || !form.hour.value || !form.minute.value)
 
     const title = schedule ? `Update Schedule ${schedule?.id}` : `Add new schedule`;
     return (
@@ -88,14 +107,14 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, a
         >
             <DialogTitle id="alert-dialog-slide-title">{title}</DialogTitle>
             <DialogContent>
-                <ScheduleForm />
+                <ScheduleForm form={form} setForm={setForm} />
                 <div className={classes.error}> {dialogError} </div>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
                     no
           </Button>
-                <Button onClick={confirm} color="primary" disabled={buttonDisabled}>
+                <Button onClick={confirm} color="primary" disabled={isBad()}>
                     {schedule ? 'Update' : 'Add'}
                 </Button>
             </DialogActions>
@@ -105,24 +124,24 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, a
 
 
 const mapStateToProps = state => ({
-    allFields: state.form,
+    // allFields: state.form,
     dialogStatus: state.form.dialogStatus,
     loggedInMail: state.myschedules.mail,
-    buttonDisabled: state.form.error
+    // buttonDisabled: state.form.error
 });
 
 const mapDispatchToProps = dispatch => {
     return {
         createSchedule: (data) => dispatch(createScheduleRequest(data)),
         updateSchedule: (data) => dispatch(updateScheduleRequest(data)),
-        setMail: (e) => dispatch(setMail(e)),
-        setBus: (e) => dispatch(setBus(e)),
-        setStation: (e) => dispatch(setStation(e)),
-        setTrigger: (e) => dispatch(setTrigger(e)),
-        setTimes: (e) => dispatch(setTimes(e)),
-        setHour: (e) => dispatch(setHour(e)),
-        setMinute: (e) => dispatch(setMinute(e)),
-        setChecked: (e) => dispatch(setChecked(e)),
+        // setMail: (e) => dispatch(setMail(e)),
+        // setBus: (e) => dispatch(setBus(e)),
+        // setStation: (e) => dispatch(setStation(e)),
+        // setTrigger: (e) => dispatch(setTrigger(e)),
+        // setTimes: (e) => dispatch(setTimes(e)),
+        // setHour: (e) => dispatch(setHour(e)),
+        // setMinute: (e) => dispatch(setMinute(e)),
+        // setChecked: (e) => dispatch(setChecked(e)),
     };
 }
 

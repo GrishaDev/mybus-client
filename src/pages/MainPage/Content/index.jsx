@@ -36,9 +36,9 @@ const MainPage = ({getSchedules, deleteSchedule, schedules, updateSnackbar}) => 
     }, [snackbar])
 
     const handleOpenUpdate = (schedule) => {
-      setCurrentSchedule(schedule);
-      console.log(currentSchedule);
-      setOpenUpdate(true);
+      // setCurrentSchedule(schedule);
+      // console.log(currentSchedule);
+      setOpenUpdate(schedule);
     }
     const handleOpenDelete = (schedule) => {
       setCurrentSchedule(schedule);
@@ -74,7 +74,7 @@ const MainPage = ({getSchedules, deleteSchedule, schedules, updateSnackbar}) => 
             </div>
         </Flipper>
 
-        <DataDialog open={openUpdate} setOpen={setOpenUpdate} schedule={currentSchedule}/>
+        <DataDialog open={openUpdate ? true : false} setOpen={setOpenUpdate} schedule={openUpdate}/>
         <DeleteDialog open={openDelete} setOpen={setOpenDelete} item={currentSchedule} onConfirm={handleConfirmDelete}/>
         <ViewSchedule open={openView} setOpen={setOpenView} schedule={currentSchedule} />
       </>
