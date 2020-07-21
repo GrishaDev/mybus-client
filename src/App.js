@@ -5,6 +5,7 @@ import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import { Router } from 'react-router';
 import { SnackbarProvider } from 'notistack';
+import ThemeProvider from 'components/ThemeProvider/ThemeProvider';
 import history from 'utils/history';
 import MainPage from 'pages/MainPage';
 import Login from 'pages/Login';
@@ -14,12 +15,14 @@ function App() {
   return (
     <Provider store={store}>
       <SnackbarProvider maxSnack={3}>
-        <Router history={history}>
-            <Switch>
-                <Route exact path="/login" component={Login} />
-                <ProtectedRoute exact path="/" component={MainPage} />
-            </Switch>
-        </Router>
+        <ThemeProvider>
+          <Router history={history}>
+              <Switch>
+                  <Route exact path="/login" component={Login} />
+                  <ProtectedRoute exact path="/" component={MainPage} />
+              </Switch>
+          </Router>
+        </ThemeProvider>
       </SnackbarProvider>
     </Provider>
   );
