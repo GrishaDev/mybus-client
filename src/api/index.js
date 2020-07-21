@@ -8,7 +8,8 @@ import wait from 'utils/wait';
 //   }),
 
 const request = axios.create({
-    baseURL: config.serverUrl
+    baseURL: config.serverUrl,
+    headers: {auth: localStorage.token}
 });
 
 const mockSchedules = [

@@ -16,8 +16,8 @@ function App() {
       <SnackbarProvider maxSnack={3}>
         <Router history={history}>
             <Switch>
-                <Route exact path="/" component={MainPage} />
-                {/* <ProtectedRoute exact path="/" component={MainPage} /> */}
+                <Route exact path="/login" component={Login} />
+                <ProtectedRoute exact path="/" component={MainPage} />
             </Switch>
         </Router>
       </SnackbarProvider>

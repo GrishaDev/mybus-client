@@ -56,10 +56,19 @@ export function *notification() {
     })
 }
 
+function *init() {
+    if(localStorage.token) {
+        const token = localStorage.token;
+        // TO DO::  yield validate token, if good continue otherwise do nothing
+        yield put(updateToken(token));
+        yield call(forwardTo, '/');
+    }
+}
 
 function* loginSaga(data) {
     const { payload } = data;
     const token = yield call(loginApi, payload);
+    localStorage.setItem("token", token);
     yield put(updateToken(token));
     yield call(forwardTo, '/');
 }
@@ -128,6 +137,7 @@ function forwardTo(location) {
 
 export default function* rootSaga() {
     yield all([
+        init(),
         watchLoginSaga(),
         watchSchedulesSaga(),
         watchDeleteSaga(),
