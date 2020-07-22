@@ -8,6 +8,7 @@ import { createScheduleRequest, updateScheduleRequest } from 'stateStuff/reducer
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 // import DialogContentText from '@material-ui/core/DialogContentText';
@@ -28,6 +29,8 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
     const classes = useStyles();
 
     const [dialogError, setDialogError] = React.useState(null);
+    const [loading, setLoading] = React.useState(false);
+
     const [form, setForm] = React.useState({
         confirmDisabled: true,
         mail: {touched: false, value: ''},
@@ -43,10 +46,12 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
         if (dialogStatus?.success) {
             setOpen(false);
             setDialogError(null);
+            setLoading(false);
         }
 
         if (dialogStatus && !dialogStatus.success) {
             setDialogError(String(dialogStatus.error));
+            setLoading(false);
         }
     }, [dialogStatus])
 
@@ -72,6 +77,8 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
                 checked: {touched: false, value: false }});
 
         }
+        setDialogError(null);
+        setLoading(false);
     }, [open])
 
     const handleClose = () => {
@@ -84,6 +91,8 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
         const data = {mail: mail.value, bus: bus.value, station: station.value, rule, trigger: trigger.value, times: times.value, checked: checked.value}
         Object.keys(data).forEach(key => !data[key] ? delete data[key] : {})
         console.log(data);
+
+        setLoading(true);
 
         if (!schedule)
             createSchedule(data);
@@ -105,8 +114,10 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
             aria-labelledby="alert-dialog-slide-title"
             aria-describedby="alert-dialog-slide-description"
         >
+            {loading && <LinearProgress />}
             <DialogTitle id="alert-dialog-slide-title">{title}</DialogTitle>
             <DialogContent>
+                
                 <ScheduleForm form={form} setForm={setForm} />
                 <div className={classes.error}> {dialogError} </div>
             </DialogContent>

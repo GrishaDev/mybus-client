@@ -8,8 +8,20 @@ import IconButton from '@material-ui/core/IconButton';
 import { Delete , Update } from '@material-ui/icons';
 import 'App.css'
 import ruleConverter from 'utils/ruleConverter';
+import Badge from '@material-ui/core/Badge';
+import DirectionsBusIcon from '@material-ui/icons/DirectionsBus';
 
 const useStyles = makeStyles(styles);
+
+const stringToHslColor =(str, s = 30, l = 40) => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  let h = hash % 360;
+  return 'hsl('+h+', '+s+'%, '+l+'%)';
+}
 
 export default ({schedule, updateSchedule, deleteSchedule}) => {
     let rule = `Time: ${ruleConverter(schedule.rule)}`
@@ -25,13 +37,18 @@ export default ({schedule, updateSchedule, deleteSchedule}) => {
       e.stopPropagation();
       deleteSchedule(schedule)
     }; 
+    const bg = stringToHslColor(schedule.id);
+    console.log('render');
 
     return (
       <>
-        <Paper elevation={3} className={classes.card}> 
+        <Paper elevation={3} className={classes.card} style={{background: bg}}> 
           <div className={classes.title}> {schedule.id}</div> 
           <div className={classes.info}>
-              <p> {rule}</p>
+              {/* <p> {rule}</p> */}
+              <Badge badgeContent={schedule.bus} max={999} color="primary">
+                <DirectionsBusIcon />
+              </Badge>
           </div>
           <div className={classes.actions}>
             <IconButton aria-label="update" onClick={clickUpdate}>

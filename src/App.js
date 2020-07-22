@@ -14,16 +14,16 @@ import ProtectedRoute from 'utils/privateRoute';
 function App() {
   return (
     <Provider store={store}>
-      <SnackbarProvider maxSnack={3}>
-        <ThemeProvider>
+      <ThemeProvider>
+        <SnackbarProvider maxSnack={3}>
           <Router history={history}>
               <Switch>
                   <Route exact path="/login" component={Login} />
                   <ProtectedRoute exact path="/" component={MainPage} />
               </Switch>
           </Router>
-        </ThemeProvider>
-      </SnackbarProvider>
+        </SnackbarProvider>
+      </ThemeProvider>
     </Provider>
   );
 }

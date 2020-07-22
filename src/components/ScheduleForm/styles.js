@@ -16,6 +16,12 @@ export default {
         //     width: 175
         // }
     },
+    advanced: {
+        width: '90%',
+        '&.MuiExpansionPanel-root:before': {
+            display: 'none',
+        },
+    },
     fake: {
         width: 200,
     },

@@ -13,8 +13,8 @@ const request = axios.create({
 });
 
 const mockSchedules = [
-    {id: '3294a', mail: "blabla@bla.com", rule: {hour: 5, minute: 5}},
-    {id: '3294b', mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}}
+    {id: '3294a', mail: "blabla@bla.com", rule: {hour: 5, minute: 5}, bus: 126, station: 3359},
+    {id: '925bamba8', mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}, bus: 171, station: 1000}
 ]
 
 const create = {id: '223', mail: "bla213bla@bla.com", rule: {hour: 52, minute: 5}};
@@ -33,7 +33,8 @@ const getSchedulesApi = async (mail) => {
 }
 
 const createScheduleApi = async (data) => {
-    if(config.isMock) { await wait(250); return {id: shortid.generate(), mail: "bla213bla@bla.com", rule: {hour: 52, minute: 5}}; }
+    if(config.isMock) { await wait(1250); return {id: shortid.generate(), mail: "bla213bla@bla.com", rule: {hour: 52, minute: 5}, bus: 271, station: 5}; }
+    // await wait(1000);
     const res = await request.post(`schedule`, data).catch(err => { throw new Error(err) });
     return res;
 }

@@ -47,8 +47,7 @@ import grey from '@material-ui/core/colors/grey';
 // }));
 
 export const lightTheme = responsiveFontSizes(createMuiTheme({
-    direction: 'rtl',
-    body: '#E2E2E2',
+    body: '#F5F5F5',
     text: '#363537',
     palette: {
       action: {
@@ -68,13 +67,12 @@ export const lightTheme = responsiveFontSizes(createMuiTheme({
   }));
   
   export const darkTheme = responsiveFontSizes(createMuiTheme({
-    direction: 'rtl',
     body: '#363537',
     text: '#FAFAFA',
     palette: {
       action: {
-        selected: grey[600],
-        expanded: grey[100]
+        selected: teal[600],
+        expanded: teal[100]
       },
       background: {
         default: "#363537"
@@ -82,7 +80,7 @@ export const lightTheme = responsiveFontSizes(createMuiTheme({
       text: {
         primary: "#ffffff"
       },
-      primary: { main: grey[600] },
+      primary: { main: teal[600] },
       secondary: red,
       type: 'dark'
     },
