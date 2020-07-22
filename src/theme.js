@@ -55,7 +55,7 @@ export const lightTheme = responsiveFontSizes(createMuiTheme({
         expanded: teal[100]
       },
       background: {
-        default: "#ffffff"
+        default: "#F5F5F5"
       },
       text: {
         primary: "#000000"

@@ -10,10 +10,11 @@ import 'App.css'
 import ruleConverter from 'utils/ruleConverter';
 import Badge from '@material-ui/core/Badge';
 import DirectionsBusIcon from '@material-ui/icons/DirectionsBus';
+import ScheduleIcon from '@material-ui/icons/Schedule';
 
 const useStyles = makeStyles(styles);
 
-const stringToHslColor =(str, s = 30, l = 40) => {
+const stringToHslColor =(str, s = 30, l = 50) => {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
@@ -24,7 +25,7 @@ const stringToHslColor =(str, s = 30, l = 40) => {
 }
 
 export default ({schedule, updateSchedule, deleteSchedule}) => {
-    let rule = `Time: ${ruleConverter(schedule.rule)}`
+    const rule = `${ruleConverter(schedule.rule)}`
     const classes = useStyles();
     // const [collapse, setCollapse] = React.useState();
 
@@ -43,18 +44,26 @@ export default ({schedule, updateSchedule, deleteSchedule}) => {
     return (
       <>
         <Paper elevation={3} className={classes.card} style={{background: bg}}> 
-          <div className={classes.title}> {schedule.id}</div> 
+          <Badge className={classes.bus} badgeContent={schedule.bus} max={999} color="primary">
+            <DirectionsBusIcon fontSize="small" />
+          </Badge>
+          <div className={classes.title}>
+            {/* <div className={classes.container}> */}
+              <svg viewBox="0 0 500 130" preserveAspectRatio="xMinYMin meet">
+                <path d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z" style={{stroke: 'none', fill:'rgba(0,0,0,0.2)'}}></path>
+              </svg>
+              <div className={classes.forceTitle}>{schedule.name}</div>
+            {/* </div> */}
+             
+          </div> 
           <div className={classes.info}>
-              {/* <p> {rule}</p> */}
-              <Badge badgeContent={schedule.bus} max={999} color="primary">
-                <DirectionsBusIcon />
-              </Badge>
+              <ScheduleIcon style={{marginTop: 10}}/> <p>{rule}</p>
           </div>
           <div className={classes.actions}>
-            <IconButton aria-label="update" onClick={clickUpdate}>
+            <IconButton style={{color: 'white'}} aria-label="update" onClick={clickUpdate}>
               <Update/>
             </IconButton>
-            <IconButton aria-label="delete" onClick={clickDelete}>
+            <IconButton style={{color: 'white'}} aria-label="delete" onClick={clickDelete}>
               <Delete/>
             </IconButton>
           </div>

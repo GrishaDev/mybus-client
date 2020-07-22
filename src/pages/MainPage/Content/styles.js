@@ -4,7 +4,7 @@ export default {
         // height: '75vh',
         maxHeight: '75vh',
         // background: 'red',
-        width: '75%',
+        width: '100%',
         margin: '0 auto',
         padding: '20px',
         display: 'flex',
