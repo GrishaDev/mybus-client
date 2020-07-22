@@ -38,7 +38,7 @@ export default ({schedule, updateSchedule, deleteSchedule}) => {
       deleteSchedule(schedule)
     }; 
     const bg = stringToHslColor(schedule.id);
-    console.log('render');
+    console.log('render card');
 
     return (
       <>

@@ -24,6 +24,7 @@ const MainPage = ({getSchedules, deleteSchedule, schedules, updateSnackbar}) => 
     const [openView, setOpenView] = React.useState(false);
     const [currentSchedule, setCurrentSchedule] = React.useState();
 
+
     // Get new schedule cards everytime they change
     useEffect(()=> {
         getSchedules()
@@ -41,25 +42,27 @@ const MainPage = ({getSchedules, deleteSchedule, schedules, updateSnackbar}) => 
       setOpenUpdate(schedule);
     }
     const handleOpenDelete = (schedule) => {
-      setCurrentSchedule(schedule);
-      setOpenDelete(true);
+      // setCurrentSchedule(schedule);
+      setOpenDelete(schedule);
     }
     const handleOpenView = async (schedule) => {
-      setCurrentSchedule(schedule);
-      setOpenView(true);
+      // setCurrentSchedule(schedule);
+      setOpenView(schedule);
 
-      // const haha = await activateNotifications();
-      // console.log('=================');
-      // console.log(haha);
+      const haha = await activateNotifications();
+      console.log('=================');
+      console.log(haha);
 
       // setCurrentSchedule(schedule);
     }
 
     const handleConfirmDelete = () => {
-      deleteSchedule(currentSchedule.id);
+      deleteSchedule(openDelete.id);
       setOpenDelete(false);
     }
 
+    console.log('content');
+    
     let schedulesArr = schedules;
     let cards = schedulesArr.map((item) =>
       <Flipped flipId={item.id} key={item.id}>
@@ -75,8 +78,8 @@ const MainPage = ({getSchedules, deleteSchedule, schedules, updateSnackbar}) => 
         </Flipper>
 
         <DataDialog open={openUpdate ? true : false} setOpen={setOpenUpdate} schedule={openUpdate}/>
-        <DeleteDialog open={openDelete} setOpen={setOpenDelete} item={currentSchedule} onConfirm={handleConfirmDelete}/>
-        <ViewSchedule open={openView} setOpen={setOpenView} schedule={currentSchedule} />
+        <DeleteDialog open={openDelete ? true : false} setOpen={setOpenDelete} item={openDelete} onConfirm={handleConfirmDelete}/>
+        <ViewSchedule open={openView ? true : false} setOpen={setOpenView} schedule={openView} />
       </>
     )
 }

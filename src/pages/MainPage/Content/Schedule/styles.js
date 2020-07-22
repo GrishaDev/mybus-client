@@ -14,7 +14,7 @@ export default {
         height: '125px',
         width: '200px',
         padding: 10,
-        animation: '$fly 0.75s ease-out',
+        // animation: '$fly 0.75s ease-out',
         // flex: '1',
         // transition: 'flex 250ms linear'
         // maxWidth: '40%',
