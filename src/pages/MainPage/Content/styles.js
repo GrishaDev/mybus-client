@@ -12,6 +12,7 @@ export default {
         // alignContent: 'flex-start',
         flexWrap: 'wrap',
         overflowY: 'auto',
+        overflowX: 'hidden'
         // tranisitionDuration: '3s',
         // flexGrow: 1
     },

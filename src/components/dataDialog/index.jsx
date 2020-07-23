@@ -41,7 +41,7 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
         hour: {touched: false, value: ''},
         minute: {touched: false, value: ''},
         checked: {touched: false, value: false}})
-
+    
     useEffect(() => {
         if (dialogStatus?.success) {
             setOpen(false);
@@ -53,6 +53,7 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
             setDialogError(String(dialogStatus.error));
             setLoading(false);
         }
+    // eslint-disable-next-line
     }, [dialogStatus])
 
     useEffect(() => {
@@ -79,6 +80,7 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
         }
         setDialogError(null);
         setLoading(false);
+    // eslint-disable-next-line
     }, [open])
 
     const handleClose = () => {

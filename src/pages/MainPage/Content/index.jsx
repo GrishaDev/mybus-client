@@ -33,6 +33,7 @@ const MainPage = ({getSchedules, deleteSchedule, schedules, updateSnackbar}) => 
     // Update snackbar context, done once
     useEffect(() => {
       updateSnackbar(snackbar) 
+    // eslint-disable-next-line
     }, [snackbar])
 
     const handleOpenUpdate = (schedule) => {

@@ -14,10 +14,13 @@ const request = axios.create({
 
 const mockSchedules = [
     {id: '3294a', name: "haha", mail: "blabla@bla.com", rule: {hour: 9, minute: 30}, bus: 126, station: 3359},
-    {id: '925bamba8', name: "arbuz", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}, bus: 171, station: 1000}
+    {id: '925bamba28', name: "arbuz", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}, bus: 171, station: 1000},
+    {id: 'k0edCov0L', name: "arbuz", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}, bus: 171, station: 1000},
+    {id: 'UV2TWMXak', name: "arbuz", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}, bus: 171, station: 1000},
+    {id: 'xGEzN-iNG', name: "arbuz", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}, bus: 171, station: 1000}
 ]
 
-const create = {id: '223', mail: "bla213bla@bla.com", rule: {hour: 52, minute: 5}};
+// const create = {id: '223', mail: "bla213bla@bla.com", rule: {hour: 52, minute: 5}};
 const update = {id: '3294a', mail: "bla213bla@bla.com", rule: {hour: 52, minute: 5}};
 
 const loginApi = async (data) => {

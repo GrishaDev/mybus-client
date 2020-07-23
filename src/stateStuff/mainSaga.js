@@ -57,9 +57,10 @@ export function *notification() {
 }
 
 function *init() {
-    if(localStorage.token) {
-        const token = localStorage.token;
-        const mail = localStorage.mail;
+    if(!localStorage.auth) return;
+    const auth = JSON.parse(localStorage.auth);
+    if(auth) {
+        const { token, mail } = auth;
         // TO DO::  yield validate token, if good continue otherwise do nothing
         yield put(updateToken(token));
         yield put(loginRequest(mail))
@@ -70,8 +71,7 @@ function *init() {
 function* loginSaga(data) {
     const { payload } = data;
     const token = yield call(loginApi, payload);
-    localStorage.setItem("token", token);
-    localStorage.setItem("mail", payload);
+    localStorage.setItem("auth", JSON.stringify({ token, mail: payload }));
     yield put(updateToken(token));
     yield call(toApp);
 }
@@ -138,9 +138,9 @@ function toApp() {
     history.push('/');
 }
 
-function toLogin() { 
-    history.push('/login');
-}
+// function toLogin() { 
+//     history.push('/login');
+// }
 
 
 

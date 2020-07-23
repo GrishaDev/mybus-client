@@ -30,11 +30,13 @@ export default React.memo(({schedule, updateSchedule, deleteSchedule}) => {
     const [animate, SetAnimate] = React.useState(true);
 
     const isFirstRender = React.useRef(true);
+    // eslint-disable-next-line
     React.useEffect(() => {
       if (isFirstRender.current) {
         isFirstRender.current = false;
         return;
       }
+      console.log("ahhaha");
       SetAnimate(false);
     });
 
@@ -81,5 +83,3 @@ export default React.memo(({schedule, updateSchedule, deleteSchedule}) => {
       </>
     )
 })
-
-//() => updateSchedule({data: {a: 'a'}, id: schedule.id })

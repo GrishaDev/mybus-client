@@ -1,18 +1,11 @@
-import React, { useEffect } from 'react';
-// import { connect } from 'react-redux';
-// import { setMail, setBus, setStation, setTrigger, setTimes, setHour, setMinute,
-// setChecked } from 'stateStuff/reducers/formReducer';
+import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import Checkbox from '@material-ui/core/Checkbox';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 // import DateFnsUtils from '@date-io/date-fns';
 // import {
 //   MuiPickersUtilsProvider,
@@ -53,7 +46,7 @@ export default ({ form, setForm }) => {
     let more = [];
     if (advanced) {
         more = [<TextField key={1} className={classes.fake} margin="normal" name="trigger" label="trigger time" value={form.trigger.value} type="number" helperText="Waits for bus to be X minutes from ur station" onChange={changeHandler} />,
-        <TextField key={2} margin="normal" label="notificates" name="times" value={form.trigger.times} type="number" helperText="How much times to notificate?" onChange={changeHandler} />]
+        <TextField key={2}  className={classes.fake} margin="normal" label="notificates" name="times" value={form.trigger.times} type="number" helperText="How much times to notificate?" onChange={changeHandler} />]
     }
 
     const icon = advanced ? <ExpandLessIcon /> : <ExpandMoreIcon />; 
