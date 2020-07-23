@@ -4,6 +4,13 @@ import { loginRequest } from 'stateStuff/reducers/schedulesReducer';
 
 const LoginPage = (props) => {
     const [mail, setMail] = useState('');
+
+    React.useEffect(()=> {
+      console.log('stfu');
+      localStorage.removeItem("mail");
+      localStorage.removeItem("token");
+    },[])
+
     return (
         <form onSubmit={(event) => { event.preventDefault(); props.login(mail) }}>
           <label>

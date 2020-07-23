@@ -59,9 +59,11 @@ export function *notification() {
 function *init() {
     if(localStorage.token) {
         const token = localStorage.token;
+        const mail = localStorage.mail;
         // TO DO::  yield validate token, if good continue otherwise do nothing
         yield put(updateToken(token));
-        yield call(forwardTo, '/');
+        yield put(loginRequest(mail))
+        yield call(toApp);
     }
 }
 
@@ -69,8 +71,9 @@ function* loginSaga(data) {
     const { payload } = data;
     const token = yield call(loginApi, payload);
     localStorage.setItem("token", token);
+    localStorage.setItem("mail", payload);
     yield put(updateToken(token));
-    yield call(forwardTo, '/');
+    yield call(toApp);
 }
 
 function* getSchedulesSaga() {
@@ -131,9 +134,15 @@ function* updateSchedulesSaga(data) {
     
     
 
-function forwardTo(location) {
-    history.push(location);
+function toApp() { 
+    history.push('/');
 }
+
+function toLogin() { 
+    history.push('/login');
+}
+
+
 
 export default function* rootSaga() {
     yield all([

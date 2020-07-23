@@ -8,7 +8,7 @@ export default {
         margin: '0 auto',
         padding: '20px',
         display: 'flex',
-        justifyContent: 'space-around',
+        justifyContent: 'center',
         // alignContent: 'flex-start',
         flexWrap: 'wrap',
         overflowY: 'auto',

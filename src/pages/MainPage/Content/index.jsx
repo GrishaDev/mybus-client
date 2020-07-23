@@ -22,8 +22,7 @@ const MainPage = ({getSchedules, deleteSchedule, schedules, updateSnackbar}) => 
     const [openUpdate, setOpenUpdate] = React.useState(false);
     const [openDelete, setOpenDelete] = React.useState(false);
     const [openView, setOpenView] = React.useState(false);
-    const [currentSchedule, setCurrentSchedule] = React.useState();
-
+    // const [currentSchedule, setCurrentSchedule] = React.useState();
 
     // Get new schedule cards everytime they change
     useEffect(()=> {
@@ -62,7 +61,7 @@ const MainPage = ({getSchedules, deleteSchedule, schedules, updateSnackbar}) => 
     }
 
     console.log('content');
-    
+
     let schedulesArr = schedules;
     let cards = schedulesArr.map((item) =>
       <Flipped flipId={item.id} key={item.id}>

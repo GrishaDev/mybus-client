@@ -31,11 +31,15 @@ export default {
         margin: '30px',
         height: '140px',
         width: '200px',
+        // animation: '$fly 0.75s ease-out 1',
+        // animationIterationCount: 1
         // padding: 10,
-        // animation: '$fly 0.75s ease-out',
         // flex: '1',
         // transition: 'flex 250ms linear'
         // maxWidth: '40%',
+    },
+    animate: {
+        animation: '$fly 0.75s ease-out',
     },
     container: {
         display: 'inline-block',

@@ -15,7 +15,7 @@ function App() {
   return (
     <Provider store={store}>
       <ThemeProvider>
-        <SnackbarProvider maxSnack={3}>
+        <SnackbarProvider maxSnack={3} style={{width: '50%'}}>
           <Router history={history}>
               <Switch>
                   <Route exact path="/login" component={Login} />

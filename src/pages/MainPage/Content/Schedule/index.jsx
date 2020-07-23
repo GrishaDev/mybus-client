@@ -24,10 +24,20 @@ const stringToHslColor =(str, s = 30, l = 50) => {
   return 'hsl('+h+', '+s+'%, '+l+'%)';
 }
 
-export default ({schedule, updateSchedule, deleteSchedule}) => {
+export default React.memo(({schedule, updateSchedule, deleteSchedule}) => {
     const rule = `${ruleConverter(schedule.rule)}`
     const classes = useStyles();
-    // const [collapse, setCollapse] = React.useState();
+    const [animate, SetAnimate] = React.useState(true);
+
+    const isFirstRender = React.useRef(true);
+    React.useEffect(() => {
+      if (isFirstRender.current) {
+        isFirstRender.current = false;
+        return;
+      }
+      SetAnimate(false);
+    });
+
 
     const clickUpdate= e => {
       e.stopPropagation();
@@ -38,12 +48,12 @@ export default ({schedule, updateSchedule, deleteSchedule}) => {
       e.stopPropagation();
       deleteSchedule(schedule)
     }; 
+
     const bg = stringToHslColor(schedule.id);
-    console.log('render card');
 
     return (
       <>
-        <Paper elevation={3} className={classes.card} style={{background: bg}}> 
+        <Paper elevation={3} className={`${classes.card} ${animate ? classes.animate : null}`} style={{background: bg}}> 
           <Badge className={classes.bus} badgeContent={schedule.bus} max={999} color="primary">
             <DirectionsBusIcon fontSize="small" />
           </Badge>
@@ -70,6 +80,6 @@ export default ({schedule, updateSchedule, deleteSchedule}) => {
         </Paper>
       </>
     )
-}
+})
 
 //() => updateSchedule({data: {a: 'a'}, id: schedule.id })

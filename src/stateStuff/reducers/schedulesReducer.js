@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    mail: 'haha@test.lol',
+    mail: '',
     token: '',
     dialogStatus: null,
     schedules: [

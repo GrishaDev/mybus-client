@@ -65,9 +65,14 @@ export default ({ form, setForm }) => {
                     <TextField error={validateStation()} margin="normal" type="number" name="station" required label="station id" value={form.station.value} helperText="" onChange={changeHandler} />
                     {/* <div></div> */}
                     <div className={classes.fake}></div>
-                    <TextField error={!form.hour.value && form.hour.touched} margin="normal" name="hour" label="Hour" required value={form.hour.value} type="number" helperText="" onChange={changeHandler} />
-                    <TextField error={!form.minute.value && form.minute.touched} margin="normal" name="minute" label="Minute" required value={form.minute.value} type="number" helperText="" onChange={changeHandler} />
-                    <div className={classes.tick}>
+
+                    <TextField error={!form.hour.value && form.hour.touched} margin="normal" name="hour" label="Hour" required 
+                    value={form.hour.value} type="number" helperText="" onChange={changeHandler} />
+
+                    <TextField error={!form.minute.value && form.minute.touched} margin="normal" name="minute" label="Minute" required
+                     value={form.minute.value} type="number" helperText="" onChange={changeHandler}/>
+
+                    <div className={classes.tick} >
                         <IconButton onClick={()=> setAdvanced(!advanced)} >
                             {icon}
                         </IconButton>
