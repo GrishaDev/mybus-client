@@ -6,13 +6,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import IconButton from '@material-ui/core/IconButton';
-// import DateFnsUtils from '@date-io/date-fns';
-// import {
-//   MuiPickersUtilsProvider,
-//   KeyboardTimePicker,
-//   KeyboardDatePicker,
-// } from '@material-ui/pickers';
-// import Divider from '@material-ui/core/Divider';
+import getWebPushSub from 'workMaker';
 
 const useStyles = makeStyles(styles);
 
@@ -24,6 +18,17 @@ export default ({ form, setForm }) => {
 
     const [advanced, setAdvanced] = React.useState(false);
 
+    const handleTick = async (e) => {
+        const isWebPush = e.target.checked;
+        if(isWebPush) {
+            const sub = await getWebPushSub();
+            console.log(sub);
+            setForm({ ...form, checked: { touched: true, value: sub } })
+        }
+        else {
+            setForm({ ...form, checked: { touched: true, value: false } })
+        }
+    }
 
     const changeHandler = e => {
         setForm({ ...form, [e.target.name]: { touched: true, value: e.target.value } });
@@ -75,35 +80,14 @@ export default ({ form, setForm }) => {
                         </IconButton>
                         Advanced fields
                     </div>
-                    {/* <Accordion className={classes.advanced}>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1a-content"
-                            id="panel1a-header"
-                        >
-                            <Typography className={classes.heading}>Accordion 1</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            yes
-                        </AccordionDetails>
-                    </Accordion> */}
 
-                    {/* <div className={classes.tick}>
-                        <Checkbox
-                            checked={advanced || false}
-                            onChange={() => setAdvanced(!advanced)}
-                            color="primary"
-                            inputProps={{ 'aria-label': 'secondary checkbox' }}
-                        />
-                        advanced?
-                    </div> */}
                     {more}
 
                 </div>
                 <div className={classes.tick}>
                     <Checkbox
-                        checked={form.checked.value || false}
-                        onChange={(e) => setForm({ ...form, checked: { touched: true, value: e.target.checked } })}
+                        checked={form.checked.value ? true : false}
+                        onChange={handleTick}
                         color="primary"
                         inputProps={{ 'aria-label': 'secondary checkbox' }}
                     />

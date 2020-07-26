@@ -10,7 +10,6 @@ import Schedule from './Schedule';
 import DeleteDialog from 'components/DeleteConfirm';
 import ViewSchedule from './ViewSchedule';
 import DataDialog from 'components/dataDialog';
-import activateNotifications from 'workMaker';
 
 const useStyles = makeStyles(styles);
 
@@ -48,11 +47,6 @@ const MainPage = ({getSchedules, deleteSchedule, schedules, updateSnackbar}) => 
     const handleOpenView = async (schedule) => {
       // setCurrentSchedule(schedule);
       setOpenView(schedule);
-
-      const haha = await activateNotifications();
-      console.log('=================');
-      console.log(haha);
-
       // setCurrentSchedule(schedule);
     }
 
@@ -61,7 +55,7 @@ const MainPage = ({getSchedules, deleteSchedule, schedules, updateSnackbar}) => 
       setOpenDelete(false);
     }
 
-    console.log('content');
+    // console.log('content');
 
     let schedulesArr = schedules;
     let cards = schedulesArr.map((item) =>

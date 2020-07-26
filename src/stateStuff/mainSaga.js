@@ -78,7 +78,6 @@ function* loginSaga(data) {
 
 function* getSchedulesSaga() {
     const { mail } = yield select();
-    console.log("kasdads");
     try {
         const schedules = yield call(getSchedulesApi, mail);
         if(schedules.status === 401) {

@@ -3,8 +3,8 @@ import config from 'config';
 const publicVapidKey = config.vapidkey;
 
 
-console.log(navigator.serviceWorker);
-console.log(typeof navigator.serviceWorker);
+// console.log(navigator.serviceWorker);
+// console.log(typeof navigator.serviceWorker);
 
 export default async () => {
 
@@ -31,18 +31,18 @@ function urlBase64ToUint8Array(base64String) {
 
 async function run() {
   console.log('Registering service worker');
-  const registration = await navigator.serviceWorker.register('./worker.js', {scope: '/'});
+  const registration = await navigator.serviceWorker.register(`${process.env.PUBLIC_URL}/worker.js`, {scope: '/public'}).catch(err=> console.log(err));
   console.log('Registered service worker');
   console.log('Registering push');
+
+  console.log(registration);
 
   const subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,
       // The `urlBase64ToUint8Array()` function is the same as in
       // https://www.npmjs.com/package/web-push#using-vapid-key-for-applicationserverkey
       applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
-    });
+    }).catch(err=> console.log(err));
   console.log('Registered push');
-  console.log(subscription);
-  console.log(JSON.stringify(subscription));
   return subscription;
 }

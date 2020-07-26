@@ -94,8 +94,14 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
         let { mail, bus, station, trigger, times, hour, minute, checked, name } = form;
         const rule  = {hour: hour.value , minute: minute.value};
         const data = {mail: mail.value, name: name.value ,bus: bus.value, station: station.value,
-        rule, trigger: trigger.value, times: times.value, checked: checked.value}
+        rule, trigger: trigger.value, times: times.value}
+
         Object.keys(data).forEach(key => !data[key] ? delete data[key] : {})
+
+        console.log(JSON.stringify(checked.value));
+
+        if(checked.value) data.webPushSub = checked.value;
+        
         console.log(data);
 
         setLoading(true);
