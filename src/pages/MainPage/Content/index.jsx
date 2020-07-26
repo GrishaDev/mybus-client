@@ -56,12 +56,19 @@ const MainPage = ({getSchedules, deleteSchedule, schedules, updateSnackbar}) => 
     }
 
     // console.log('content');
+    let cards;
 
-    let schedulesArr = schedules;
-    let cards = schedulesArr.map((item) =>
-      <Flipped flipId={item.id} key={item.id}>
-        <div onClick={()=>handleOpenView(item)}><Schedule schedule={item} updateSchedule={handleOpenUpdate} deleteSchedule={handleOpenDelete}/></div>
-      </Flipped>);
+
+    if(schedules.length > 0) {
+      let schedulesArr = schedules;
+      cards = schedulesArr.map((item) =>
+        <Flipped flipId={item.id} key={item.id}>
+          <div onClick={()=>handleOpenView(item)}><Schedule schedule={item} updateSchedule={handleOpenUpdate} deleteSchedule={handleOpenDelete}/></div>
+        </Flipped>);
+    }
+    else {
+      cards = <p className={classes.noSchedules}> You don't have any schedules, be sure to create. </p>
+    }
 
     return (
       <>

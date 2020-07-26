@@ -98,7 +98,12 @@ function* getSchedulesSaga() {
 function* deleteSchedulesSaga(data) {
     const { payload } = data;
     try { 
-        yield call(deleteScheduleApi, payload);
+        const res = yield call(deleteScheduleApi, payload);
+        if(res.status !== 200) {
+            console.log(`Error ${res.status}`);
+            yield put(showErrorAlert(`Failed deleting, status ${res.status}`));
+            return;
+        }
         yield put(deleteSchedule(payload));
         yield put(showSuccessAlert(`Deleted`))
     }
@@ -112,9 +117,16 @@ function* createSchedulesSaga(data) {
     const { payload } = data;
     try { 
         const res = yield call(createScheduleApi, payload);
-        yield put(addSchedule(res));
+        if(res.status !== 200) {
+            console.log(`Error ${res.status}`);
+            yield put(showErrorAlert(`Failed creating, status ${res.status}`));
+            yield put(setDialogStatus({success: false, error: res.message}));
+            return;
+        }
+
+        yield put(addSchedule(res.data));
         yield put(showSuccessAlert('Created'));
-        yield put (setDialogStatus({success: true, error: null}));
+        yield put(setDialogStatus({success: true, error: null}));
     }
     catch(err) {
         yield put(showErrorAlert('Failed creating'));
@@ -127,7 +139,14 @@ function* updateSchedulesSaga(data) {
     const { payload } = data;
     try {
         const res = yield call(updateScheduleApi, payload.id, payload.data);
-        yield put(updateSchedule(res));
+        if(res.status !== 200) {
+            console.log(`Error ${res.status}`);
+            yield put(showErrorAlert(`Failed updating, status ${res.status}`));
+            yield put(setDialogStatus({success: false, error: res.message}));
+            return;
+        }
+
+        yield put(updateSchedule(res.data));
         yield put(showSuccessAlert('Updated'));
         yield put (setDialogStatus({success: true, error: null}));
     }

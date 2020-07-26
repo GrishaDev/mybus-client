@@ -21,7 +21,7 @@ const mockSchedules = [
 ]
 
 // const create = {id: '223', mail: "bla213bla@bla.com", rule: {hour: 52, minute: 5}};
-const update = {id: '3294a', mail: "bla213bla@bla.com", rule: {hour: 52, minute: 5}};
+const update = {status: 200, data: {id: '3294a', mail: "bla213bla@bla.com", rule: {hour: 52, minute: 5}}};
 
 const loginApi = async (data) => {
     if(config.isMock) { await wait(250); return '392A8349ABs9359SA' };
@@ -30,13 +30,13 @@ const loginApi = async (data) => {
 }
 
 const getSchedulesApi = async (mail) => {
-    if(config.isMock) { await wait(250); return mockSchedules; }
+    if(config.isMock) { await wait(250); return []; } //mockSchedules
     const res = await request.get(`schedules/mail/${mail}`).catch(err => { throw new Error(err) });
     return res;
 }
 
 const createScheduleApi = async (data) => {
-    if(config.isMock) { await wait(1250); return {id: shortid.generate(), mail: "bla213bla@bla.com", rule: {hour: 52, minute: 5}, bus: 271, station: 5, name: "test"}; }
+    if(config.isMock) { await wait(1250); return {status: 200, data: {id: shortid.generate(), mail: "bla213bla@bla.com", rule: {hour: 52, minute: 5}, bus: 271, station: 5, name: "test"}}; }
     // await wait(1000);
     const res = await request.post(`schedule`, data).catch(err => { throw new Error(err) });
     return res;
@@ -49,7 +49,7 @@ const updateScheduleApi = async (id, data) => {
 }
 
 const deleteScheduleApi = async (id) => {
-    if(config.isMock) { await wait(250); return true; }
+    if(config.isMock) { await wait(250); return {status: 200}; }
     const res = await request.delete(`schedule/${id}`).catch(err => { throw new Error(err) });
     return res;
 }

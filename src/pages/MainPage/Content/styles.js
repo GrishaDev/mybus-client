@@ -24,5 +24,9 @@ export default {
         gridGap: '1rem',
         padding: 0,
         margin: 0,
+    },
+    noSchedules: {
+        fontSize: '2em',
+        fontWeight: 'bold'
     }
 }
