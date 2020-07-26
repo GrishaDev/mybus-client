@@ -78,10 +78,17 @@ function* loginSaga(data) {
 
 function* getSchedulesSaga() {
     const { mail } = yield select();
+    console.log("kasdads");
     try {
         const schedules = yield call(getSchedulesApi, mail);
+        if(schedules.status === 401) {
+            console.log('Unauthorized');
+            yield call(toLogin);
+            return;
+        }
         yield put(updateSchedules(schedules));
-        yield put(showSuccessAlert(`Got Schedules`))
+        yield put(showSuccessAlert(`Got Schedules`));
+
     }
     catch(err) {
         yield put(showErrorAlert('Cant get schedules from server'));
@@ -138,9 +145,9 @@ function toApp() {
     history.push('/');
 }
 
-// function toLogin() { 
-//     history.push('/login');
-// }
+function toLogin() { 
+    history.push('/login');
+}
 
 
 

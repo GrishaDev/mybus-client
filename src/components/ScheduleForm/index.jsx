@@ -34,8 +34,11 @@ export default ({ form, setForm }) => {
         return ((!form.mail.value || !test) && form.mail.touched);
     }
 
+    const validateName = () => {
+        return (!form.name.value && form.name.touched);
+    }
+
     const validateBus = () => {
-        ;
         return (!form.bus.value && form.bus.touched);
     }
 
@@ -54,10 +57,11 @@ export default ({ form, setForm }) => {
             <div className={classes.form}>
                 <div className={classes.fields}>
                     <TextField error={validateMail()} margin="normal" name="mail" required label="Mail" value={form.mail.value} helperText="" onChange={changeHandler} />
+                    <TextField error={validateName()} margin="normal" autoComplete='off' name="name" required label="name" value={form.name.value} helperText="" onChange={changeHandler} />
                     <TextField error={validateBus()} margin="normal" type="number" name="bus" required label="bus line" value={form.bus.value} helperText="" onChange={changeHandler} />
                     <TextField error={validateStation()} margin="normal" type="number" name="station" required label="station id" value={form.station.value} helperText="" onChange={changeHandler} />
                     {/* <div></div> */}
-                    <div className={classes.fake}></div>
+                    {/* <div className={classes.fake}></div> */}
 
                     <TextField error={!form.hour.value && form.hour.touched} margin="normal" name="hour" label="Hour" required 
                     value={form.hour.value} type="number" helperText="" onChange={changeHandler} />

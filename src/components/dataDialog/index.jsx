@@ -34,6 +34,7 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
     const [form, setForm] = React.useState({
         confirmDisabled: true,
         mail: {touched: false, value: ''},
+        name: {touched: false, value: ''},
         bus: {touched: false, value: ''},
         station: {touched: false, value: ''},
         trigger: {touched: false, value: ''},
@@ -59,6 +60,7 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
     useEffect(() => {
         if (schedule) {
             setForm({...form, mail: {touched: false, value: schedule?.mail || '' },
+                name: {touched: false, value: schedule?.name || ''},
                 hour: {touched: false, value: schedule?.rule?.hour || '' },
                 minute: {touched: false, value: schedule?.rule?.minute || '' },
                 bus: {touched: false, value: schedule?.bus || ''},
@@ -69,6 +71,7 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
         }
         else {
             setForm({...form, mail: {touched: false, value: loggedInMail },
+                name: {touched: false, value: ''},
                 hour: {touched: false, value: '' },
                 minute: {touched: false, value: '' },
                 bus: {touched: false, value: ''},
@@ -88,9 +91,10 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
     };
 
     const confirm = () => {
-        let { mail, bus, station, trigger, times, hour, minute, checked } = form;
+        let { mail, bus, station, trigger, times, hour, minute, checked, name } = form;
         const rule  = {hour: hour.value , minute: minute.value};
-        const data = {mail: mail.value, bus: bus.value, station: station.value, rule, trigger: trigger.value, times: times.value, checked: checked.value}
+        const data = {mail: mail.value, name: name.value ,bus: bus.value, station: station.value,
+        rule, trigger: trigger.value, times: times.value, checked: checked.value}
         Object.keys(data).forEach(key => !data[key] ? delete data[key] : {})
         console.log(data);
 
@@ -102,7 +106,7 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
             updateSchedule(data);
     }
 
-    const isBad = () => (!form.mail.value || !form.bus.value || !form.station.value || !form.hour.value || !form.minute.value)
+    const isBad = () => (!form.mail.value || !form.name.value || !form.bus.value || !form.station.value || !form.hour.value || !form.minute.value)
 
     const title = schedule ? `Update Schedule ${schedule?.id}` : `Add new schedule`;
     return (
