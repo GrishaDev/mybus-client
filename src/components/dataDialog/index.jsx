@@ -109,7 +109,7 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
         if (!schedule)
             createSchedule(data);
         else
-            updateSchedule(data);
+            updateSchedule({id: schedule.id, data});
     }
 
     const isBad = () => (!form.mail.value || !form.name.value || !form.bus.value || !form.station.value || !form.hour.value || !form.minute.value)

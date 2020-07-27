@@ -70,29 +70,44 @@ function *init() {
 }
 
 function* loginSaga(data) {
-    const { payload } = data;
-    const token = yield call(loginApi, payload);
-    console.log(token);
-    localStorage.setItem("auth", JSON.stringify({ token, mail: payload }));
-    yield put(updateToken(token));
-    yield call(toApp);
+    try {
+        const { payload } = data;
+        const { data: token } = yield call(loginApi, {mail: payload});
+        console.log(token);
+        localStorage.setItem("auth", JSON.stringify({ token, mail: payload }));
+        yield put(updateToken(token));
+        yield call(toApp);
+    }
+    catch(err){
+        console.log(err.status);
+    }
 }
 
 function* getSchedulesSaga() {
-    const { mail } = yield select();
+    const state = yield select();
+    const mail = state.myschedules.mail;
+    console.log(mail);
     try {
         const schedules = yield call(getSchedulesApi, mail);
-        if(schedules.status === 401) {
-            console.log('Unauthorized');
-            yield call(toLogin);
-            return;
-        }
-        yield put(updateSchedules(schedules));
+        console.log(schedules);
+        // if(schedules.status === 401) {
+        //     console.log('Unauthorized');
+        //     yield call(toLogin);
+        //     return;
+        // }
+        yield put(updateSchedules(schedules.data));
         yield put(showSuccessAlert(`Got Schedules`));
 
     }
     catch(err) {
-        yield put(showErrorAlert('Cant get schedules from server'));
+        if(err.status === 401) {
+            console.log('Unauthorized');
+            yield call(toLogin);
+            return;
+        }
+        else {
+            yield put(showErrorAlert('Cant get schedules from server'));
+        }
         console.log(err);
     }
 }
@@ -101,16 +116,24 @@ function* deleteSchedulesSaga(data) {
     const { payload } = data;
     try { 
         const res = yield call(deleteScheduleApi, payload);
-        if(res.status !== 200) {
-            console.log(`Error ${res.status}`);
-            yield put(showErrorAlert(`Failed deleting, status ${res.status}`));
-            return;
-        }
+        // if(res.statusCode !== 200) {
+        //     console.log(`Error ${res.status}`);
+        //     yield put(showErrorAlert(`Failed deleting, status ${res.status}`));
+        //     return;
+        // }
         yield put(deleteSchedule(payload));
         yield put(showSuccessAlert(`Deleted`))
     }
     catch(err) {
-        yield put(showErrorAlert('Failed deleting'));
+        if(err.status === 401) {
+            console.log('Unauthorized');
+            yield call(toLogin);
+            return;
+        }
+        else {
+            console.log(`Error ${err.status}`);
+            yield put(showErrorAlert(`Failed deleting, status ${err.status}`));
+        }
         console.log(err);
     }
 }
@@ -119,42 +142,65 @@ function* createSchedulesSaga(data) {
     const { payload } = data;
     try { 
         const res = yield call(createScheduleApi, payload);
-        if(res.status !== 200) {
-            console.log(`Error ${res.status}`);
-            yield put(showErrorAlert(`Failed creating, status ${res.status}`));
-            yield put(setDialogStatus({success: false, error: res.message}));
-            return;
-        }
+        console.log("===================");
+        console.log(res);
+        console.log("===================");
+        // if(res.status !== 200) {
+        //     console.log(`Error ${res.status}`);
+        //     yield put(showErrorAlert(`Failed creating, status ${res.status}`));
+        //     yield put(setDialogStatus({success: false, error: res.message}));
+        //     return;
+        // }
 
         yield put(addSchedule(res.data));
         yield put(showSuccessAlert('Created'));
         yield put(setDialogStatus({success: true, error: null}));
     }
     catch(err) {
-        yield put(showErrorAlert('Failed creating'));
-        yield put (setDialogStatus({success: false, error: err}));
+        if(err.status === 401) {
+            console.log('Unauthorized');
+            yield call(toLogin);
+            return;
+        }
+        else {
+            console.log(`Error ${err.status}`);
+            yield put(showErrorAlert(`Failed creating, status ${err.status}`));
+            yield put (setDialogStatus({success: false, error: err.data.message}));
+        }
         console.log(err);
     }
 }
 
 function* updateSchedulesSaga(data) {
+    // console.log('TFU');
+    // console.log(id);
+    // console.log(data);
     const { payload } = data;
     try {
+        console.log(payload);
         const res = yield call(updateScheduleApi, payload.id, payload.data);
-        if(res.status !== 200) {
-            console.log(`Error ${res.status}`);
-            yield put(showErrorAlert(`Failed updating, status ${res.status}`));
-            yield put(setDialogStatus({success: false, error: res.message}));
-            return;
-        }
+        // if(res.status !== 200) {
+        //     console.log(`Error ${res.status}`);
+        //     yield put(showErrorAlert(`Failed updating, status ${res.status}`));
+        //     yield put(setDialogStatus({success: false, error: res.message}));
+        //     return;
+        // }
 
         yield put(updateSchedule(res.data));
         yield put(showSuccessAlert('Updated'));
         yield put (setDialogStatus({success: true, error: null}));
     }
     catch(err) {
-        yield put(showErrorAlert('Failed updating'));
-        yield put (setDialogStatus({success: false, error: err}));
+        if(err.status === 401) {
+            console.log('Unauthorized');
+            yield call(toLogin);
+            return;
+        }
+        else {
+            console.log(`Error ${err.status}`);
+            yield put(showErrorAlert(`Failed updating, status ${err.status}`));
+            yield put (setDialogStatus({success: false, error: err.data.message}));
+        }
         console.log(err);
     }
 }
