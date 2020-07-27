@@ -57,20 +57,22 @@ export function *notification() {
 }
 
 function *init() {
+    console.log('init');
     if(!localStorage.auth) return;
     const auth = JSON.parse(localStorage.auth);
     if(auth) {
-        const { token, mail } = auth;
-        // TO DO::  yield validate token, if good continue otherwise do nothing
-        yield put(updateToken(token));
+        const { mail } = auth;
+        // // TO DO::  yield validate token, if good continue otherwise do nothing
+        // yield put(updateToken(token));
         yield put(loginRequest(mail))
-        yield call(toApp);
+        // yield call(toApp);
     }
 }
 
 function* loginSaga(data) {
     const { payload } = data;
     const token = yield call(loginApi, payload);
+    console.log(token);
     localStorage.setItem("auth", JSON.stringify({ token, mail: payload }));
     yield put(updateToken(token));
     yield call(toApp);

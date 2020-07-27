@@ -1,7 +1,7 @@
 export default {
     env: 'dev',
-    isMock: 'true',
-    serverUrl: 'http://localhost:3000/api/',
+    isMock: false,
+    serverUrl: '/api/',
     vapidkey: 'BD_5MmozAF-gMuVZcDaMHrdsYBUtRlkFizkFQZH7lyaM9RcDgh822UyNthQFzWXjs6we0DBdhbwxm8RtceUuntQ'
 }
 
