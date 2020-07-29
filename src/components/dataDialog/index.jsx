@@ -17,6 +17,7 @@ import Slide from '@material-ui/core/Slide';
 import ScheduleForm from 'components/ScheduleForm';
 
 import styles from './styles';
+import { NightsStay } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 
@@ -65,7 +66,7 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
                 minute: {touched: false, value: schedule?.rule?.minute || '' },
                 bus: {touched: false, value: schedule?.bus || ''},
                 station: {touched: false, value: schedule?.station || ''},
-                trigger: {touched: false, value: schedule?.trigger || '' },
+                trigger: {touched: false, value: schedule?.scheduleTrigger || '' },
                 times: {touched: false, value: schedule?.times || '' },
                 checked: {touched: false, value: schedule?.webPushSub ? true : false}});
         }
@@ -91,7 +92,16 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
     };
 
     const confirm = () => {
+        console.log(form);
+
         let { mail, bus, station, trigger, times, hour, minute, checked, name } = form;
+
+        console.log(trigger);
+        console.log(trigger.value);
+        console.log(trigger.value || null);
+        let a = trigger.value || null;
+        console.log(a);
+        
         const rule  = {hour: hour.value , minute: minute.value};
         const data = {mail: mail.value, name: name.value ,bus: bus.value, station: station.value,
         rule, scheduleTrigger: trigger.value || null, times: times.value || null}

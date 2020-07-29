@@ -54,7 +54,7 @@ export default ({ form, setForm }) => {
     let more = [];
     if (advanced) {
         more = [<TextField key={1} className={classes.fake} margin="normal" name="trigger" label="trigger time" value={form.trigger.value} type="number" helperText="Waits for bus to be X minutes from ur station" onChange={changeHandler} />,
-        <TextField key={2}  className={classes.fake} margin="normal" label="notificates" name="times" value={form.trigger.times} type="number" helperText="How much times to notificate?" onChange={changeHandler} />]
+        <TextField key={2}  className={classes.fake} margin="normal" label="notificates" name="times" value={form.times.value} type="number" helperText="How much times to notificate?" onChange={changeHandler} />]
     }
 
     const icon = advanced ? <ExpandLessIcon /> : <ExpandMoreIcon />; 
