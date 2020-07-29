@@ -23,23 +23,6 @@ html,body {
   background-color: red;
 }
 
-
-.example-enter {
-  opacity: 0;
-}
-.example-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-.example-exit {
-  opacity: 1;
-}
-.example-exit-active {
-  opacity: 0;
-  transition: opacity 500ms ease-in;
-}
-
-
 /* @keyframes something {
   100% { transform: translateX(0%); }
 }

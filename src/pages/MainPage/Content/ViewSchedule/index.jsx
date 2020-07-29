@@ -25,7 +25,7 @@ export default ({ open, setOpen, schedule }) => {
   };
 
 
-  const title = `Schedule ${schedule?.id}`;
+  const title = `Schedule ${schedule?.name || ''}`;
 
   let items;
   if(schedule) {
@@ -33,6 +33,7 @@ export default ({ open, setOpen, schedule }) => {
     let values = Object.values(schedule);
     items = values.map((item,index)=> {
         let text = keys[index] === 'rule' ? ruleConverter(item) : item;
+        // text = keys[index] === 'webPushSub' ? item ? true : false : false;
         return <div key={index} className={classes.item}>{`${keys[index]}: ${text}`}</div>
     })
   }

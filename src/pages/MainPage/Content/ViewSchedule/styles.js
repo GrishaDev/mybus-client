@@ -1,5 +1,7 @@
 export default {
     content: {
+        minWidth: 400,
+        minHeight: 100,
         display: 'flex',
         flexWrap: 'wrap',
         // flexFlow: 'row wrap',

@@ -67,7 +67,7 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
                 station: {touched: false, value: schedule?.station || ''},
                 trigger: {touched: false, value: schedule?.trigger || '' },
                 times: {touched: false, value: schedule?.times || '' },
-                checked: {touched: false, value: schedule?.checked || false }});
+                checked: {touched: false, value: schedule?.webPushSub ? true : false}});
         }
         else {
             setForm({...form, mail: {touched: false, value: loggedInMail },
@@ -94,13 +94,13 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
         let { mail, bus, station, trigger, times, hour, minute, checked, name } = form;
         const rule  = {hour: hour.value , minute: minute.value};
         const data = {mail: mail.value, name: name.value ,bus: bus.value, station: station.value,
-        rule, scheduleTrigger: trigger.value, times: times.value}
+        rule, scheduleTrigger: trigger.value || null, times: times.value || null}
 
         Object.keys(data).forEach(key => !data[key] ? delete data[key] : {})
 
         console.log(JSON.stringify(checked.value));
 
-        if(checked.value) data.webPushSub = checked.value;
+        if(checked.touched) data.webPushSub = checked.value || false;
         
         console.log(data);
 
@@ -114,7 +114,7 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
 
     const isBad = () => (!form.mail.value || !form.name.value || !form.bus.value || !form.station.value || !form.hour.value || !form.minute.value)
 
-    const title = schedule ? `Update Schedule ${schedule?.id}` : `Add new schedule`;
+    const title = schedule ? `Update Schedule ${schedule?.name}` : `Add new schedule`;
     return (
         <Dialog
             open={open}

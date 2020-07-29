@@ -23,7 +23,7 @@ export default ({ open, setOpen, item, onConfirm }) => {
     setOpen(false);
   };
 
-  const title = `Delete ${item?.id}?`;
+  const title = `Delete ${item?.name || ''}?`;
 
   return (
       <Dialog
