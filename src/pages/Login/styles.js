@@ -3,6 +3,20 @@ export default {
         '0%': { transform: 'translateY(-400%)' },
         '100%': { transform: 'translateY(0%)' }
     },
+    svgContainer: { 
+        display: 'inline-block',
+        position: 'relative',
+        width: '100%',
+        paddingBottom: '100%',
+        verticalAlign: 'middle',
+        overflow: 'hidden',
+    },
+    svgContent: { 
+        display: 'inline-block',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+    },
     container: {
         display: 'flex',
         flexDirection: 'column',
@@ -41,5 +55,16 @@ export default {
     },
     mailField: {
         width: 150
+    },
+    error: {
+        color: 'red',
+        width: '100%',
+        position: 'absolute',
+        textAlign: 'center',
+        top: 0,
+        marginTop: 120,
+        padding: 10,
+        margin: '0 auto',
+        fontWeight: 'bold'
     }
 }

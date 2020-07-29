@@ -4,10 +4,7 @@ const initialState = {
     mail: '',
     token: '',
     dialogStatus: null,
-    schedules: [
-        // {id: '3294a', mail: "blabla@bla.com", rule: {hour: 5, minute: 5}},
-        // {id: '3294b', mail: "blabla@bla.com", rule: {hour: 5, minute: 5}}
-    ]
+    schedules: null,
 };
 
 

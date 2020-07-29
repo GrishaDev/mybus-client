@@ -10,6 +10,7 @@ import Schedule from './Schedule';
 import DeleteDialog from 'components/DeleteConfirm';
 import ViewSchedule from './ViewSchedule';
 import DataDialog from 'components/dataDialog';
+import LinearProgress from '@material-ui/core/LinearProgress'
 
 const useStyles = makeStyles(styles);
 
@@ -56,22 +57,24 @@ const MainPage = ({getSchedules, deleteSchedule, schedules, updateSnackbar}) => 
     }
 
     // console.log('content');
-    let cards;
+    let cards = [];
 
-
-    if(schedules.length > 0) {
-      let schedulesArr = schedules;
-      cards = schedulesArr.map((item) =>
-        <Flipped flipId={item.id} key={item.id}>
-          <div onClick={()=>handleOpenView(item)}><Schedule schedule={item} updateSchedule={handleOpenUpdate} deleteSchedule={handleOpenDelete}/></div>
-        </Flipped>);
-    }
-    else {
-      cards = <p className={classes.noSchedules}> You don't have any schedules, be sure to create. </p>
+    if(schedules) {
+      if(schedules.length > 0) {
+        let schedulesArr = schedules;
+        cards = schedulesArr.map((item) =>
+          <Flipped flipId={item.id} key={item.id}>
+            <div onClick={()=>handleOpenView(item)}><Schedule schedule={item} updateSchedule={handleOpenUpdate} deleteSchedule={handleOpenDelete}/></div>
+          </Flipped>);
+      }
+      else {
+        cards = <p className={classes.noSchedules}> You don't have any schedules, be sure to create. </p>
+      }
     }
 
     return (
       <>
+        {!schedules && <LinearProgress /> }
         <Flipper flipKey={cards.length}>
             <div className={classes.content}>
                   {cards}

@@ -30,7 +30,7 @@ const loginApi = async (data) => {
 }
 
 const getSchedulesApi = async (mail) => {
-    if(config.isMock) { await wait(250); return {data: []}; } //mockSchedules
+    if(config.isMock) { await wait(1250); return {data: []}; } //mockSchedules
     const res = await request.get(`schedules/mail/${mail}`).catch(err => { throw (err.response) });
     return res;
 }

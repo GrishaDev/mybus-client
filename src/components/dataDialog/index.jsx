@@ -94,7 +94,7 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
         let { mail, bus, station, trigger, times, hour, minute, checked, name } = form;
         const rule  = {hour: hour.value , minute: minute.value};
         const data = {mail: mail.value, name: name.value ,bus: bus.value, station: station.value,
-        rule, trigger: trigger.value, times: times.value}
+        rule, scheduleTrigger: trigger.value, times: times.value}
 
         Object.keys(data).forEach(key => !data[key] ? delete data[key] : {})
 

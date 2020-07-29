@@ -75,11 +75,22 @@ function* loginSaga(data) {
         const { data: token } = yield call(loginApi, {mail: payload});
         console.log(token);
         localStorage.setItem("auth", JSON.stringify({ token, mail: payload }));
+        yield put(setDialogStatus({success: true, error: null}));
         yield put(updateToken(token));
         yield call(toApp);
     }
     catch(err){
-        console.log(err.status);
+        if(err.status === 401) {
+            console.log('Unauthorized');
+            yield put (setDialogStatus({success: false, error: err.data.message}));
+            return;
+        }
+        else {
+            console.log(`Error ${err.status}`);
+            const msg = err.data.message === undefined ? 'Error contacting server' : err.data.message;
+            yield put (setDialogStatus({success: false, error: msg}));
+        }
+        console.log(err);
     }
 }
 
@@ -115,7 +126,7 @@ function* getSchedulesSaga() {
 function* deleteSchedulesSaga(data) {
     const { payload } = data;
     try { 
-        const res = yield call(deleteScheduleApi, payload);
+        yield call(deleteScheduleApi, payload);
         // if(res.statusCode !== 200) {
         //     console.log(`Error ${res.status}`);
         //     yield put(showErrorAlert(`Failed deleting, status ${res.status}`));
