@@ -1,10 +1,20 @@
 import config from 'config';
 
 const publicVapidKey = config.vapidkey;
-
+let registration;
 
 // console.log(navigator.serviceWorker);
 // console.log(typeof navigator.serviceWorker);
+
+(async ()=> {
+    console.log('Registering service worker');
+    if ('serviceWorker' in navigator) {
+        registration = await navigator.serviceWorker.register(`${process.env.PUBLIC_URL}/worker.js`, {scope: '/public'}).catch(err=> console.log(err));
+        console.log('Registered service worker');
+    }
+    else console.log('no service worker');
+})();
+
 
 export default async () => {
 
@@ -30,12 +40,6 @@ function urlBase64ToUint8Array(base64String) {
 }
 
 async function run() {
-  console.log('Registering service worker');
-  const registration = await navigator.serviceWorker.register(`${process.env.PUBLIC_URL}/worker.js`, {scope: '/public'}).catch(err=> console.log(err));
-  console.log('Registered service worker');
-  console.log('Registering push');
-
-  console.log(registration);
 
   const subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,

@@ -53,7 +53,7 @@ export default ({ form, setForm }) => {
 
     let more = [];
     if (advanced) {
-        more = [<TextField key={1} className={classes.fake} margin="normal" name="trigger" label="trigger time" value={form.trigger.value} type="number" helperText="Waits for bus to be X minutes from ur station" onChange={changeHandler} />,
+        more = [<TextField key={1} className={classes.fake} margin="normal" name="scheduleTrigger" label="trigger time" value={form.scheduleTrigger.value} type="number" helperText="Waits for bus to be X minutes from ur station" onChange={changeHandler} />,
         <TextField key={2}  className={classes.fake} margin="normal" label="notificates" name="times" value={form.times.value} type="number" helperText="How much times to notificate?" onChange={changeHandler} />]
     }
 
@@ -96,44 +96,3 @@ export default ({ form, setForm }) => {
             </div>
     )
 }
-
-
-// const mapStateToProps = state => ({
-//     data: state.form
-//   });
-
-//   const mapDispatchToProps = dispatch => {
-//     return {
-//       setMail: (e) => dispatch(setMail(e)),
-//       setBus: (e) => dispatch(setBus(e)),
-//       setStation: (e) => dispatch(setStation(e)),
-//       setTrigger: (e) => dispatch(setTrigger(e.target.value)),
-//       setTimes: (e) => dispatch(setTimes(e.target.value)),
-//       setHour: (e) => dispatch(setHour(e)),
-//       setMinute: (e) => dispatch(setMinute(e)),
-//       setChecked: (e) => dispatch(setChecked(e.target.checked)),
-//     };
-//   }
-
-// const connectedScheduleForm = connect(
-//     mapStateToProps,
-//     mapDispatchToProps
-// )(ScheduleForm);
-
-// export default connectedScheduleForm;
-
-
-/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardTimePicker
-                            id="time-picker"
-                            label="Notify time"
-                            margin="normal"
-                            value={date}
-                            required
-                            // error={isNaN(date?.getTime())}
-                            onChange={handleDateChange}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change time',
-                        }}
-                        />
-                    </MuiPickersUtilsProvider> */
