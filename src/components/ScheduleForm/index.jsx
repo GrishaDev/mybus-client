@@ -22,7 +22,6 @@ export default ({ form, setForm }) => {
         const isWebPush = e.target.checked;
         if(isWebPush) {
             const sub = await getWebPushSub();
-            console.log(sub);
             setForm({ ...form, checked: { touched: true, value: sub } })
         }
         else {

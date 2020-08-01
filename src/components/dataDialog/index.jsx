@@ -87,15 +87,8 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
     };
 
     const confirm = () => {
-        console.log(form);
-
         let { mail, bus, station, scheduleTrigger, times, hour, minute, checked, name } = form;
-
-        console.log(scheduleTrigger);
-        console.log(scheduleTrigger.value);
-        console.log(scheduleTrigger.value || null);
         let a = scheduleTrigger.value || null;
-        console.log(a);
 
         const triggerValue = scheduleTrigger.touched ? scheduleTrigger.value || null : '';
         const timesValue = times.touched ? times.value || null : '';
@@ -106,11 +99,7 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
 
         Object.keys(data).forEach(key => (data[key] === '' || data[key] === undefined) ? delete data[key] : {})
 
-        console.log(JSON.stringify(checked.value));
-
         if(checked.touched) data.webPushSub = checked.value || false;
-        
-        console.log(data);
 
         setLoading(true);
 

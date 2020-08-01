@@ -2,7 +2,7 @@ export default {
     env: 'dev',
     isMock: false,
     serverUrl: '/api/',
-    vapidkey: 'BD_5MmozAF-gMuVZcDaMHrdsYBUtRlkFizkFQZH7lyaM9RcDgh822UyNthQFzWXjs6we0DBdhbwxm8RtceUuntQ'
+    vapidkey: 'BCD4EBerkE5vr8-MTicFVCVtL2-EEUORed8kRH4PncfX_S92s3ArP4uWJEt0-5ok0cos4uKxr4osFuelJzGNhSc'
 }
 
 // export default {

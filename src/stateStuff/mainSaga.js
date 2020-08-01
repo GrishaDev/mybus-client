@@ -57,7 +57,6 @@ export function *notification() {
 }
 
 function *init() {
-    console.log('init');
     if(!localStorage.auth) return;
     const auth = JSON.parse(localStorage.auth);
     if(auth) {
@@ -97,10 +96,8 @@ function* loginSaga(data) {
 function* getSchedulesSaga() {
     const state = yield select();
     const mail = state.myschedules.mail;
-    console.log(mail);
     try {
         const schedules = yield call(getSchedulesApi, mail);
-        console.log(schedules);
         // if(schedules.status === 401) {
         //     console.log('Unauthorized');
         //     yield call(toLogin);
@@ -153,9 +150,6 @@ function* createSchedulesSaga(data) {
     const { payload } = data;
     try { 
         const res = yield call(createScheduleApi, payload);
-        console.log("===================");
-        console.log(res);
-        console.log("===================");
         // if(res.status !== 200) {
         //     console.log(`Error ${res.status}`);
         //     yield put(showErrorAlert(`Failed creating, status ${res.status}`));
@@ -188,7 +182,6 @@ function* updateSchedulesSaga(data) {
     // console.log(data);
     const { payload } = data;
     try {
-        console.log(payload);
         const res = yield call(updateScheduleApi, payload.id, payload.data);
         // if(res.status !== 200) {
         //     console.log(`Error ${res.status}`);

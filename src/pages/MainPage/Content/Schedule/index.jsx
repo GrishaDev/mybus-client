@@ -36,7 +36,6 @@ export default React.memo(({schedule, updateSchedule, deleteSchedule}) => {
         isFirstRender.current = false;
         return;
       }
-      console.log("ahhaha");
       SetAnimate(false);
     });
 
