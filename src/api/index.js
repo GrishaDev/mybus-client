@@ -13,8 +13,8 @@ const request = axios.create({
 });
 
 const mockSchedules = [
-    {id: '3294a', name: "haha", mail: "blabla@bla.com", rule: {hour: 9, minute: 30}, bus: 126, station: 3359},
-    {id: '925bamba28', name: "arbuz", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}, bus: 171, station: 1000},
+    {id: '3294a', name: "haha", mail: "blabla@bla.com", rule: {hour: 9, minute: 15}, bus: 126, station: 3359},
+    {id: '925bamba28', name: "arbuz23", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 0}, bus: 171, station: 1000, scheduleTrigger: 12},
     {id: 'k0edCov0L', name: "arbuz", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}, bus: 171, station: 1000},
     {id: 'UV2TWMXak', name: "arbuz", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}, bus: 171, station: 1000},
     {id: 'xGEzN-iNG', name: "arbuz", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}, bus: 171, station: 1000}

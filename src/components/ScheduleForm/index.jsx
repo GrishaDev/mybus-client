@@ -69,10 +69,10 @@ export default ({ form, setForm, setLoading }) => {
     return (
             <div className={classes.form}>
                 <div className={classes.fields}>
-                    <TextField error={validateMail()} margin="normal" name="mail" required label="Mail"
+                    <TextField error={validateMail()} className={classes.fake} margin="normal" name="mail" required label="Mail"
                      value={form.mail.value} helperText="" onChange={changeHandler} />
 
-                    <TextField error={validateName()} margin="normal" autoComplete='off' name="name" required label="name"
+                    <TextField error={validateName()} className={classes.fake} margin="normal" autoComplete='off' name="name" required label="name"
                      value={form.name.value} helperText="" onChange={changeHandler} />
 
                     <TextField error={validateBus()} className={classes.fake} margin="normal" type="number" name="bus" required label="bus number"
@@ -84,7 +84,7 @@ export default ({ form, setForm, setLoading }) => {
                     <TextField error={!form.hour.value && form.hour.touched} className={classes.fake} margin="normal" name="hour" label="Hour" required 
                     value={form.hour.value} type="number" helperText="Good: 9,  bad: 9:00" onChange={changeHandler} />
 
-                    <TextField error={!form.minute.value && form.minute.touched} margin="normal" name="minute" label="Minute" required
+                    <TextField error={!form.minute.value && form.minute.touched} className={classes.fake} margin="normal" name="minute" label="Minute" required
                      value={form.minute.value} type="number" helperText="Good: 30 or 5" onChange={changeHandler}/>
 
                     <div className={classes.tick} >

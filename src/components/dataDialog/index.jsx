@@ -55,13 +55,19 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
 
     useEffect(() => {
         if (schedule) {
+            let hour = schedule?.rule?.hour;
+            if(hour === undefined || hour === null ) hour = '';
+
+            let minute = schedule?.rule?.minute;
+            if(minute === undefined || minute === null ) minute = '';
+
             setForm({...form, mail: {touched: false, value: schedule?.mail || '' },
                 name: {touched: false, value: schedule?.name || ''},
-                hour: {touched: false, value: schedule?.rule?.hour || '' },
-                minute: {touched: false, value: schedule?.rule?.minute || '' },
+                hour: {touched: false, value: String(hour)},
+                minute: {touched: false, value: String(minute)},
                 bus: {touched: false, value: schedule?.bus || ''},
                 station: {touched: false, value: schedule?.station || ''},
-                scheduleTrigger: {touched: false, value: schedule?.schedulescheduleTrigger || '' },
+                scheduleTrigger: {touched: false, value: schedule?.scheduleTrigger || '' },
                 times: {touched: false, value: schedule?.times || '' },
                 checked: {touched: false, value: schedule?.webPushSub ? true : false}});
         }
@@ -101,7 +107,7 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
         if(checked.touched) data.webPushSub = checked.value || false;
 
         setLoading(true);
-
+        
         if (!schedule)
             createSchedule(data);
         else
