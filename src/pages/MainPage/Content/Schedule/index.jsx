@@ -20,7 +20,7 @@ const stringToHslColor =(str, s = 30, l = 50) => {
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
   }
 
-  let h = hash % 360;
+  let h = hash % 160; // 360
   return 'hsl('+h+', '+s+'%, '+l+'%)';
 }
 

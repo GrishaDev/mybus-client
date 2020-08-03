@@ -41,6 +41,8 @@ function urlBase64ToUint8Array(base64String) {
 
 async function run() {
 
+    // const shit = await registration.pushManager.getSubscription();
+    // await shit.unsubscribe();
   const subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,
       // The `urlBase64ToUint8Array()` function is the same as in

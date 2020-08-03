@@ -2,7 +2,7 @@ export default {
     content: {
         // marginTop: '50px',
         // height: '75vh',
-        maxHeight: '75vh',
+        maxHeight: '85vh',
         // background: 'red',
         width: '100%',
         margin: '0 auto',

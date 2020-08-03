@@ -3,7 +3,7 @@ export default {
         position: 'absolute',
         bottom: 0,
         right: 0,
-        margin: '10px',
+        margin: '20px',
         // zIndex: 10000
     }
 }

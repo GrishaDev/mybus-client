@@ -1,6 +1,6 @@
 export default {
     content: {
-        minWidth: 400,
+        // minWidth: 400,
         minHeight: 100,
         display: 'flex',
         flexWrap: 'wrap',

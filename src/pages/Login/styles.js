@@ -50,11 +50,12 @@ export default {
         position: 'absolute',
         width: '100%',
         bottom: 0,
+        padding: 5,
         display: 'flex',
         justifyContent: 'center'
     },
     mailField: {
-        width: 150
+        width: 250
     },
     error: {
         color: 'red',

@@ -88,12 +88,11 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
 
     const confirm = () => {
         let { mail, bus, station, scheduleTrigger, times, hour, minute, checked, name } = form;
-        let a = scheduleTrigger.value || null;
 
         const triggerValue = scheduleTrigger.touched ? scheduleTrigger.value || null : '';
         const timesValue = times.touched ? times.value || null : '';
 
-        const rule  = {hour: hour.value , minute: minute.value};
+        const rule  = {hour: Number(hour.value) , minute: Number(minute.value)};
         const data = {mail: mail.value, name: name.value ,bus: bus.value, station: station.value,
         rule, scheduleTrigger: triggerValue, times: timesValue}
 
@@ -127,7 +126,7 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
             <DialogTitle id="alert-dialog-slide-title">{title}</DialogTitle>
             <DialogContent>
                 
-                <ScheduleForm form={form} setForm={setForm} />
+                <ScheduleForm form={form} setForm={setForm} setLoading={setLoading} />
                 <div className={classes.error}> {dialogError} </div>
             </DialogContent>
             <DialogActions>

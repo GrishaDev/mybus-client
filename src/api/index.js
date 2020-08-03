@@ -30,13 +30,13 @@ const loginApi = async (data) => {
 }
 
 const getSchedulesApi = async (mail) => {
-    if(config.isMock) { await wait(1250); return {data: []}; } //mockSchedules
+    if(config.isMock) { await wait(300); return {data: mockSchedules}; } //mockSchedules  or []
     const res = await request.get(`schedules/mail/${mail}`).catch(err => { throw (err.response) });
     return res;
 }
 
 const createScheduleApi = async (data) => {
-    if(config.isMock) { await wait(1250); return {status: 200, data: {id: shortid.generate(), mail: "bla213bla@bla.com", rule: {hour: 52, minute: 5}, bus: 271, station: 5, name: "test"}}; }
+    if(config.isMock) { await wait(300); return {status: 200, data: {id: shortid.generate(), mail: "bla213bla@bla.com", rule: {hour: 52, minute: 5}, bus: 271, station: 5, name: "test"}}; }
     // await wait(1000);
     const res = await request.post(`schedule`, data).catch(err => { throw (err.response)});
     return res;

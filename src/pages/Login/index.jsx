@@ -27,7 +27,8 @@ const LoginPage = ({ login, dialogStatus }) => {
   }, [dialogStatus])
 
   React.useEffect(() => {
-    localStorage.removeItem("auth");
+    setDialogError(null);
+    // history.push('/login');
   }, [])
 
 
@@ -50,7 +51,7 @@ const LoginPage = ({ login, dialogStatus }) => {
             <div className={classes.form}>
               <TextField required autoFocus className={classes.mailField} margin="normal" variant="outlined" label="mail" name="mail" type='mail' 
                 onChange={(e) => setMail(e.target.value)} onKeyPress={keypress}/>
-              <Button endIcon={<VpnKeyIcon />} type="submit" margin="normal" color="primary" disabled={!mail} onClick={()=> login(mail)}>Login</Button>
+              <Button endIcon={<VpnKeyIcon />} type="submit" margin="normal" color="primary" disabled={!mail} onClick={()=> login(mail)}></Button>
               
             </div>
             <div className={classes.error}> {dialogError} </div>

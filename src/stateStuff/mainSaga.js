@@ -72,7 +72,6 @@ function* loginSaga(data) {
     try {
         const { payload } = data;
         const { data: token } = yield call(loginApi, {mail: payload});
-        console.log(token);
         localStorage.setItem("auth", JSON.stringify({ token, mail: payload }));
         yield put(setDialogStatus({success: true, error: null}));
         yield put(updateToken(token));

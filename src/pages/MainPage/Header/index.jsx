@@ -20,6 +20,7 @@ export default () => {
     );
     
     const logout = () => {
+        localStorage.removeItem("auth");
         history.push('/login');
     }
 

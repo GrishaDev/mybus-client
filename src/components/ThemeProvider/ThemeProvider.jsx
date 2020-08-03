@@ -30,9 +30,10 @@ export default function ThemeProvider(props) {
         themeSwitch: themeSwitch
     }
 
+    // theme expression is swapped to make darktheme default
     return (
         <ThemeContext.Provider value={contextValue}>
-            <MuiThemeProvider theme={isDark ? darkTheme : lightTheme}>
+            <MuiThemeProvider theme={isDark ? lightTheme : darkTheme}>  
                 <CssBaseline />
                 {props.children}
             </MuiThemeProvider>
