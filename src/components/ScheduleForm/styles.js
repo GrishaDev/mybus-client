@@ -25,6 +25,9 @@ export default {
     fake: {
         width: 200,
     },
+    slider: {
+        width: '85%',
+    },
     tick: {
         marginTop: 20,
         width: '100%',

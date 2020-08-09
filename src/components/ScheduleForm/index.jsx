@@ -1,7 +1,15 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-// import InputAdornment from '@material-ui/core/InputAdornment';
-// import Tooltip from '@material-ui/core/Tooltip';
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardTimePicker,
+  } from '@material-ui/pickers';
+
+import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/core/Slider';
+
 import { makeStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -20,6 +28,17 @@ export default ({ form, setForm, setLoading }) => {
     const classes = useStyles();
 
     const [advanced, setAdvanced] = React.useState(false);
+    const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+
+    const [value, setValue] = React.useState([10, 12]);
+
+    const handleChangeTrigger = (event, newValue) => {
+        setValue(newValue);
+    };
+
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
 
     const handleTick = async (e) => {
         const isWebPush = e.target.checked;
@@ -81,20 +100,56 @@ export default ({ form, setForm, setLoading }) => {
                     <TextField error={validateStation()} className={classes.fake} margin="normal" type="number" name="station" required label="station id"
                      value={form.station.value} helperText="station number, find it on google maps" onChange={changeHandler} />
 
-                    <TextField error={!form.hour.value && form.hour.touched} className={classes.fake} margin="normal" name="hour" label="Hour" required 
+                    {/* <TextField error={!form.hour.value && form.hour.touched} className={classes.fake} margin="normal" name="hour" label="Hour" required 
                     value={form.hour.value} type="number" helperText="Good: 9,  bad: 9:00" onChange={changeHandler} />
 
                     <TextField error={!form.minute.value && form.minute.touched} className={classes.fake} margin="normal" name="minute" label="Minute" required
-                     value={form.minute.value} type="number" helperText="Good: 30 or 5" onChange={changeHandler}/>
+                     value={form.minute.value} type="number" helperText="Good: 30 or 5" onChange={changeHandler}/> */}
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardTimePicker
+                            className={classes.fake}
+                            ampm={false}
+                            margin="normal"
+                            id="time-picker"
+                            label="Depart time"
+                            helperText="Time you would like to be on bus."
+                            value={selectedDate}
+                            onChange={handleDateChange}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change time',
+                            }}
+                        />
+                    </MuiPickersUtilsProvider>
+                    
+                    {/* <div className={classes.slider}>
+                        <Typography id="range-slider" gutterBottom>
+                            Minimum and maximum time it takes for you to get to your station
+                        </Typography>
+                        <Slider
+                            value={value}
+                            onChange={handleChangeTrigger}
+                            valueLabelDisplay="auto"
+                            aria-labelledby="range-slider"
+                            max={20}
+                            min={1}
+                        />
+                    </div> */}
 
-                    <div className={classes.tick} >
+                    <TextField className={classes.fake} margin="normal" name="scheduleTrigger" label="Max time to station" value={form.scheduleTrigger.value}
+                        type="number" helperText="How much minutes it takes to get to station from your starting location at most?" onChange={changeHandler} />
+
+                    <TextField className={classes.fake} margin="normal" name="scheduleTrigger" label="Min time to station" value={form.scheduleTrigger.value}
+                        type="number" helperText="How much minutes it takes to get to station from your starting location if you are quick?" onChange={changeHandler} />
+
+
+                    {/* <div className={classes.tick} >
                         <IconButton onClick={()=> setAdvanced(!advanced)} >
                             {icon}
                         </IconButton>
                         Advanced fields
                     </div>
 
-                    {more}
+                    {more} */}
 
                 </div>
                 <div className={classes.tick}>
