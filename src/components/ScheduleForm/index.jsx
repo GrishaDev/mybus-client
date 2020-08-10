@@ -1,11 +1,5 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-import 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-    MuiPickersUtilsProvider,
-    KeyboardTimePicker,
-  } from '@material-ui/pickers';
 
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
@@ -17,6 +11,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import IconButton from '@material-ui/core/IconButton';
 // import HelpIcon from '@material-ui/icons/Help';
+import DayPicker from './dayPicker';
+import HourPicker from './hourPicker';
 import getWebPushSub from 'workMaker';
 
 const useStyles = makeStyles(styles);
@@ -28,8 +24,12 @@ export default ({ form, setForm, setLoading }) => {
     const classes = useStyles();
 
     const [advanced, setAdvanced] = React.useState(false);
-    const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+    const [selectedDate, setSelectedDate] = React.useState();
 
+    React.useEffect(() => {
+        const date = createRuleAsDate(form.hour.value, form.minute.value);
+        setSelectedDate(date);
+    },[form.hour])
     const [value, setValue] = React.useState([10, 12]);
 
     const handleChangeTrigger = (event, newValue) => {
@@ -38,7 +38,13 @@ export default ({ form, setForm, setLoading }) => {
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
+        setForm({ ...form, ['hour']: { touched: true, value: date?.getHours()},
+                           ['minute']: { touched: true, value: date?.getMinutes()}});
     };
+
+    const handleDaysChange = (daysofweek) => {
+        setForm({ ...form, ['dayOfWeek']: { touched: true, value: daysofweek} });
+    }
 
     const handleTick = async (e) => {
         const isWebPush = e.target.checked;
@@ -105,22 +111,17 @@ export default ({ form, setForm, setLoading }) => {
 
                     <TextField error={!form.minute.value && form.minute.touched} className={classes.fake} margin="normal" name="minute" label="Minute" required
                      value={form.minute.value} type="number" helperText="Good: 30 or 5" onChange={changeHandler}/> */}
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardTimePicker
-                            className={classes.fake}
-                            ampm={false}
-                            margin="normal"
-                            id="time-picker"
-                            label="Depart time"
-                            helperText="Time you would like to be on bus."
-                            value={selectedDate}
-                            onChange={handleDateChange}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change time',
-                            }}
-                        />
-                    </MuiPickersUtilsProvider>
-                    
+
+                    <HourPicker selectedDate={selectedDate} handleDateChange={handleDateChange}/>
+
+                    <div className={classes.fake}>
+    
+                    </div>
+
+                    <DayPicker dayofweek={form.dayOfWeek.value} handleDaysChange={handleDaysChange}/>
+
+
+
                     {/* <div className={classes.slider}>
                         <Typography id="range-slider" gutterBottom>
                             Minimum and maximum time it takes for you to get to your station
@@ -130,17 +131,26 @@ export default ({ form, setForm, setLoading }) => {
                             onChange={handleChangeTrigger}
                             valueLabelDisplay="auto"
                             aria-labelledby="range-slider"
-                            max={20}
+                            max={30}
                             min={1}
                         />
                     </div> */}
 
-                    <TextField className={classes.fake} margin="normal" name="scheduleTrigger" label="Max time to station" value={form.scheduleTrigger.value}
-                        type="number" helperText="How much minutes it takes to get to station from your starting location at most?" onChange={changeHandler} />
+                    <TextField required className={classes.fake} margin="normal" name="maxTrigger" label="Max time to station" value={form.maxTrigger.value}
+                        type="number" helperText="How much minutes it takes to get to station from your starting location at most?"
+                        onChange={changeHandler} error={!form.maxTrigger.value && form.maxTrigger.touched}/>
 
-                    <TextField className={classes.fake} margin="normal" name="scheduleTrigger" label="Min time to station" value={form.scheduleTrigger.value}
-                        type="number" helperText="How much minutes it takes to get to station from your starting location if you are quick?" onChange={changeHandler} />
+                    <TextField required className={classes.fake} margin="normal" name="minTrigger" label="Min time to station" value={form.minTrigger.value}
+                        type="number" helperText="How much minutes it takes to get to station from your starting location if you are quick?"
+                        onChange={changeHandler} error={!form.minTrigger.value && form.minTrigger.touched} />
 
+                    
+                    <TextField className={classes.fake} margin="normal" label="how many times?" name="times" value={form.times.value}
+                        type="number" helperText="How many times to perform the notification? In case you might want the next bus." onChange={changeHandler} />
+
+                    <div className={classes.fake}>
+
+                    </div>
 
                     {/* <div className={classes.tick} >
                         <IconButton onClick={()=> setAdvanced(!advanced)} >
@@ -165,6 +175,12 @@ export default ({ form, setForm, setLoading }) => {
     )
 }
 
+const createRuleAsDate = (hour = 8, minute = 0) => {
+    let date = new Date();
+    date.setHours(Number(hour));
+    date.setMinutes(Number(minute));
+    return date;
+}
 // InputProps = {{ endAdornment: (
 //     <InputAdornment position="end">
 //         <Tooltip title={"haha"}>

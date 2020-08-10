@@ -20,6 +20,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const defaultWeekDays = [0,1,2,3,4];
+
 // if schedule === null then its add dialog  , otherwise its update dialog.
 const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, dialogStatus, loggedInMail }) => {
     const classes = useStyles();
@@ -33,12 +35,14 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
         name: {touched: false, value: ''},
         bus: {touched: false, value: ''},
         station: {touched: false, value: ''},
-        scheduleTrigger: {touched: false, value: ''},
+        minTrigger: {touched: false, value: ''},
+        maxTrigger: {touched: false, value: ''},
         times: {touched: false, value: ''},
         hour: {touched: false, value: ''},
         minute: {touched: false, value: ''},
+        dayOfWeek: {touched: false, value: []},
         checked: {touched: false, value: false}})
-    
+
     useEffect(() => {
         if (dialogStatus?.success) {
             setOpen(false);
@@ -63,22 +67,26 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
 
             setForm({...form, mail: {touched: false, value: schedule?.mail || '' },
                 name: {touched: false, value: schedule?.name || ''},
-                hour: {touched: false, value: String(hour)},
-                minute: {touched: false, value: String(minute)},
+                hour: {touched: false, value: hour},
+                minute: {touched: false, value: minute},
+                dayOfWeek: {touched: false, value: hour ? schedule.rule.dayOfWeek : []},
                 bus: {touched: false, value: schedule?.bus || ''},
                 station: {touched: false, value: schedule?.station || ''},
-                scheduleTrigger: {touched: false, value: schedule?.scheduleTrigger || '' },
+                maxTrigger: {touched: false, value: schedule?.scheduleTrigger?.max || '' },
+                minTrigger: {touched: false, value: schedule?.scheduleTrigger?.min || '' },
                 times: {touched: false, value: schedule?.times || '' },
                 checked: {touched: false, value: schedule?.webPushSub ? true : false}});
         }
         else {
             setForm({...form, mail: {touched: false, value: loggedInMail },
                 name: {touched: false, value: ''},
-                hour: {touched: false, value: '' },
-                minute: {touched: false, value: '' },
+                hour: {touched: false, value: 8 },
+                minute: {touched: false, value: 0 },
+                dayOfWeek: {touched: false, value: defaultWeekDays},
                 bus: {touched: false, value: ''},
                 station: {touched: false, value: ''},
-                scheduleTrigger: {touched: false, value: '' },
+                minTrigger: {touched: false, value: ''},
+                maxTrigger: {touched: false, value: ''},
                 times: {touched: false, value: '' },
                 checked: {touched: false, value: false }});
 
@@ -93,14 +101,15 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
     };
 
     const confirm = () => {
-        let { mail, bus, station, scheduleTrigger, times, hour, minute, checked, name } = form;
+        let { mail, bus, station, maxTrigger, minTrigger, times, hour, minute, dayOfWeek, checked, name } = form;
 
-        const triggerValue = scheduleTrigger.touched ? scheduleTrigger.value || null : '';
+        // const triggerValue = scheduleTrigger.touched ? scheduleTrigger.value || null : '';
         const timesValue = times.touched ? times.value || null : '';
 
-        const rule  = {hour: Number(hour.value) , minute: Number(minute.value)};
+        const rule  = {hour: Number(hour.value) , minute: Number(minute.value), dayOfWeek: dayOfWeek.value};
+        const scheduleTrigger = {maxTrigger: Number(maxTrigger.value) , minTrigger: Number(minTrigger.value)};
         const data = {mail: mail.value, name: name.value ,bus: bus.value, station: station.value,
-        rule, scheduleTrigger: triggerValue, times: timesValue}
+        rule, scheduleTrigger: scheduleTrigger, times: timesValue}
 
         Object.keys(data).forEach(key => (data[key] === '' || data[key] === undefined) ? delete data[key] : {})
 
@@ -108,13 +117,20 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
 
         setLoading(true);
         
+        console.log(data);
+
         if (!schedule)
             createSchedule(data);
         else
             updateSchedule({id: schedule.id, data});
     }
 
-    const isBad = () => (!form.mail.value || !form.name.value || !form.bus.value || !form.station.value || !form.hour.value || !form.minute.value)
+    console.log(form);
+
+    const isBad = () => (!Number.isInteger(form.hour.value) || !Number.isInteger(form.minute.value)  || !form.mail.value || !form.name.value || !form.bus.value ||
+    !form.station.value || !form.maxTrigger.value || !form.minTrigger.value)
+
+    //|| !form.hour.value || !form.minute.value
 
     const title = schedule ? `Update Schedule ${schedule?.name}` : `Add new schedule`;
     return (

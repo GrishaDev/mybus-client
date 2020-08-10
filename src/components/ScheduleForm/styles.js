@@ -28,6 +28,10 @@ export default {
     slider: {
         width: '85%',
     },
+    days: {
+        marginTop: 20,
+        width: '85%',
+    },
     tick: {
         marginTop: 20,
         width: '100%',
