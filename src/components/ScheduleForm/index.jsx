@@ -1,16 +1,8 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-
-import Typography from '@material-ui/core/Typography';
-import Slider from '@material-ui/core/Slider';
-
 import { makeStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import Checkbox from '@material-ui/core/Checkbox';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import IconButton from '@material-ui/core/IconButton';
-// import HelpIcon from '@material-ui/icons/Help';
 import DayPicker from './dayPicker';
 import HourPicker from './hourPicker';
 import getWebPushSub from 'workMaker';
@@ -23,27 +15,24 @@ const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0
 export default ({ form, setForm, setLoading }) => {
     const classes = useStyles();
 
-    const [advanced, setAdvanced] = React.useState(false);
+    // const [advanced, setAdvanced] = React.useState(false);
     const [selectedDate, setSelectedDate] = React.useState();
 
+    //eslint-disable-next-line
     React.useEffect(() => {
         const date = createRuleAsDate(form.hour.value, form.minute.value);
         setSelectedDate(date);
+    //eslint-disable-next-line
     },[form.hour])
-    const [value, setValue] = React.useState([10, 12]);
-
-    const handleChangeTrigger = (event, newValue) => {
-        setValue(newValue);
-    };
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
-        setForm({ ...form, ['hour']: { touched: true, value: date?.getHours()},
-                           ['minute']: { touched: true, value: date?.getMinutes()}});
+        setForm({ ...form, 'hour': { touched: true, value: date?.getHours()},
+                           'minute': { touched: true, value: date?.getMinutes()}});
     };
 
     const handleDaysChange = (daysofweek) => {
-        setForm({ ...form, ['dayOfWeek']: { touched: true, value: daysofweek} });
+        setForm({ ...form, 'dayOfWeek': { touched: true, value: daysofweek} });
     }
 
     const handleTick = async (e) => {
@@ -80,17 +69,17 @@ export default ({ form, setForm, setLoading }) => {
         return (!form.station.value && form.station.touched);
     }
 
-    let more = [];
-    if (advanced) {
-        more = [<TextField key={1} className={classes.fake} margin="normal" name="scheduleTrigger" label="trigger time" value={form.scheduleTrigger.value}
-         type="number" helperText="Waits for bus to be X minutes from ur station and only then notificates
-         example: if value 12 is given, the service will wait for bus to be 12minutes or less from station and only then notificate" onChange={changeHandler} />,
+    // let more = [];
+    // if (advanced) {
+    //     more = [<TextField key={1} className={classes.fake} margin="normal" name="scheduleTrigger" label="trigger time" value={form.scheduleTrigger.value}
+    //      type="number" helperText="Waits for bus to be X minutes from ur station and only then notificates
+    //      example: if value 12 is given, the service will wait for bus to be 12minutes or less from station and only then notificate" onChange={changeHandler} />,
 
-        <TextField key={2}  className={classes.fake} margin="normal" label="how many times?" name="times" value={form.times.value}
-         type="number" helperText="How many times to perform the notification? In case you might want the next bus. default value: 1" onChange={changeHandler} />]
-    }
+    //     <TextField key={2}  className={classes.fake} margin="normal" label="how many times?" name="times" value={form.times.value}
+    //      type="number" helperText="How many times to perform the notification? In case you might want the next bus. default value: 1" onChange={changeHandler} />]
+    // }
 
-    const icon = advanced ? <ExpandLessIcon /> : <ExpandMoreIcon />; 
+    // const icon = advanced ? <ExpandLessIcon /> : <ExpandMoreIcon />; 
     return (
             <div className={classes.form}>
                 <div className={classes.fields}>

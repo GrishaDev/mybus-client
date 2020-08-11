@@ -125,7 +125,6 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
             updateSchedule({id: schedule.id, data});
     }
 
-    console.log(form);
 
     const isBad = () => (!Number.isInteger(form.hour.value) || !Number.isInteger(form.minute.value)  || !form.mail.value || !form.name.value || !form.bus.value ||
     !form.station.value || !form.maxTrigger.value || !form.minTrigger.value)

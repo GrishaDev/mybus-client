@@ -8,7 +8,7 @@ const picked = {backgroundColor: 'green'};
 
 const daysData = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
-export default ({dayofweek, handleDaysChange}) => {
+export default ({dayofweek = [], handleDaysChange}) => {
     const classes = useStyles();
     
     // const [weekDays, setWeekDays] = React.useState(dayofweek);
@@ -28,12 +28,12 @@ export default ({dayofweek, handleDaysChange}) => {
 
     
     return (
-        <>
-            <p> When to repeat the schedule? </p>
+        <div className={classes.picker}>
+            <p className={classes.title}> When to repeat the schedule? </p>
             <div className={classes.week}>
                 {days}
             </div>
-        </>
+        </div>
     )
 }
 

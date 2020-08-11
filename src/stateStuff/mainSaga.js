@@ -15,7 +15,7 @@ import { put, call, takeEvery, all, select, getContext } from 'redux-saga/effect
 
 import { showErrorAlert, schedulesRequest, deleteScheduleRequest, createScheduleRequest, updateScheduleRequest,
 showSuccessAlert, updateSnackbar } from './reducers/requestsReducer';
-import { loginRequest, updateToken, updateSchedules, addSchedule, updateSchedule, deleteSchedule} from './reducers/schedulesReducer';
+import { loginRequest, updateToken, updateSchedules, addSchedule, updateSchedule, deleteSchedule } from './reducers/schedulesReducer';
 import { setDialogStatus } from './reducers/formReducer';
 
 import { loginApi, getSchedulesApi, createScheduleApi, updateScheduleApi, deleteScheduleApi } from 'api';

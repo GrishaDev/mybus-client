@@ -29,7 +29,7 @@ export default {
         color: 'white',
         // background: 'yellow',
         margin: '30px',
-        height: '140px',
+        height: '200px',
         width: '200px',
         // animation: '$fly 0.75s ease-out 1',
         // animationIterationCount: 1
@@ -37,6 +37,9 @@ export default {
         // flex: '1',
         // transition: 'flex 250ms linear'
         // maxWidth: '40%',
+    },
+    pausedCard: {
+        filter: 'brightness(50%)',
     },
     animate: {
         animation: '$fly 0.75s ease-out',
@@ -84,7 +87,10 @@ export default {
         margin: '0 auto',
         width: '50%',
         display: 'flex',
-        justifyContent: 'space-around',
+        '& p' : {
+            marginLeft: 10
+        }
+        // justifyContent: 'space-around',
         // alignItems: 'flex-start'
     },
     actions: {
@@ -94,7 +100,8 @@ export default {
         bottom: 5,
         width: '100%',
         display: 'flex',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        
     }
 }
 

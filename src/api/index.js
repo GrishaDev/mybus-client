@@ -13,7 +13,7 @@ const request = axios.create({
 });
 
 const mockSchedules = [
-    {id: '3294a', name: "haha", mail: "blabla@bla.com", rule: {hour: 9, minute: 15}, bus: 126, station: 3359},
+    {id: '3294a', name: "haha", mail: "blabla@bla.com", rule: {hour: 9, minute: 15}, bus: 126, station: 3359, paused: true},
     {id: '925bamba28', name: "arbuz23", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 0}, bus: 171, station: 1000, scheduleTrigger: 12},
     {id: 'k0edCov0L', name: "arbuz", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}, bus: 171, station: 1000},
     {id: 'UV2TWMXak', name: "arbuz", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}, bus: 171, station: 1000},
@@ -54,4 +54,17 @@ const deleteScheduleApi = async (id) => {
     return res;
 }
 
-export { loginApi, getSchedulesApi, createScheduleApi, updateScheduleApi, deleteScheduleApi };
+const getBusTimesApi = async (station, bus) => {
+    if(config.isMock) { await wait(250); return randomBusTimes(); }
+    const res = await request.get(`bustime/${station}/${bus}`).catch(err => { throw (err.response) });
+    return res;
+}
+
+const randomBusTimes = () => {
+    let x  = Math.floor((Math.random() * 60) + 1);
+    let y  = Math.floor((Math.random() * 60) + 1);
+    let z  = Math.floor((Math.random() * 60) + 1);
+
+    return `${x}, ${y}, ${z}`;
+}
+export { loginApi, getSchedulesApi, createScheduleApi, updateScheduleApi, deleteScheduleApi, getBusTimesApi };

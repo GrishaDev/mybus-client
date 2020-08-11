@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { Flipper, Flipped } from "react-flip-toolkit";
-import { schedulesRequest, deleteScheduleRequest, updateSnackbar } from 'stateStuff/reducers/requestsReducer';
+import { schedulesRequest, deleteScheduleRequest, updateSnackbar, updateScheduleRequest } from 'stateStuff/reducers/requestsReducer';
 import 'App.css'
 import styles from './styles';
 import Schedule from './Schedule';
@@ -14,7 +14,7 @@ import LinearProgress from '@material-ui/core/LinearProgress'
 
 const useStyles = makeStyles(styles);
 
-const MainPage = ({getSchedules, deleteSchedule, schedules, updateSnackbar}) => {
+const MainPage = ({getSchedules, deleteSchedule, schedules, updateSnackbar, updateSchedule}) => {
     const classes = useStyles();
     const snackbar = useSnackbar();
 
@@ -56,6 +56,11 @@ const MainPage = ({getSchedules, deleteSchedule, schedules, updateSnackbar}) => 
       setOpenDelete(false);
     }
 
+    const pauseSchedule = (schedule) => {
+      let paused = schedule.paused;
+      const data = {paused: !paused};
+      updateSchedule({id: schedule.id, data});
+    }
     // console.log('content');
     let cards = [];
 
@@ -64,7 +69,8 @@ const MainPage = ({getSchedules, deleteSchedule, schedules, updateSnackbar}) => 
         let schedulesArr = schedules;
         cards = schedulesArr.map((item) =>
           <Flipped flipId={item.id} key={item.id}>
-            <div onClick={()=>handleOpenView(item)}><Schedule schedule={item} updateSchedule={handleOpenUpdate} deleteSchedule={handleOpenDelete}/></div>
+            <div onClick={()=>handleOpenView(item)}><Schedule schedule={item}
+             updateSchedule={handleOpenUpdate} deleteSchedule={handleOpenDelete} pauseSchedule={pauseSchedule}/></div>
           </Flipped>);
       }
       else {
@@ -97,6 +103,7 @@ const mapStateToProps = state => ({
       updateSnackbar: (snackbar) => dispatch(updateSnackbar(snackbar)),
       getSchedules: () => dispatch(schedulesRequest()),
       deleteSchedule: (id) => dispatch(deleteScheduleRequest(id)),
+      updateSchedule: (data) => dispatch(updateScheduleRequest(data)),
     };
   }
 

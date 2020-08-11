@@ -27,7 +27,7 @@ export default {
     },
     formBox: {
         // padding: 20,
-        animation: '$fly 1s ease-out',
+        // animation: '$fly 1s ease-out',
         height: 400,
         width: '50%',
         minWidth: 300,
