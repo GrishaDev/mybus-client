@@ -41,6 +41,9 @@ self.addEventListener('notificationclick', async (event) => {
   }
   else {
     console.log('open the app');
+    event.waitUntil(
+      clients.openWindow(event.notification.data.url)
+    );
   }
 });
 

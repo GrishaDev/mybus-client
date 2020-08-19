@@ -1,6 +1,6 @@
 export default {
     env: 'dev',
-    isMock: true,
+    isMock: false,
     serverUrl: '/api/',
     busUpdateInterval: 60000,
     vapidkey: 'BCD4EBerkE5vr8-MTicFVCVtL2-EEUORed8kRH4PncfX_S92s3ArP4uWJEt0-5ok0cos4uKxr4osFuelJzGNhSc'

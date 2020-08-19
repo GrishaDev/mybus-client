@@ -57,7 +57,7 @@ const deleteScheduleApi = async (id) => {
 const getBusTimesApi = async (station, bus) => {
     if(config.isMock) { await wait(250); return randomBusTimes(); }
     const res = await request.get(`bustime/${station}/${bus}`).catch(err => { throw (err.response) });
-    return res;
+    return res.data || [];
 }
 
 const randomBusTimes = () => {
@@ -65,6 +65,7 @@ const randomBusTimes = () => {
     let y  = Math.floor((Math.random() * 60) + 1);
     let z  = Math.floor((Math.random() * 60) + 1);
 
-    return `${x}, ${y}, ${z}`;
+    // return `${x}, ${y}, ${z}`;
+    return [x, y, z]
 }
 export { loginApi, getSchedulesApi, createScheduleApi, updateScheduleApi, deleteScheduleApi, getBusTimesApi };

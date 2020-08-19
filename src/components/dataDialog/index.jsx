@@ -107,7 +107,7 @@ const DataDialog = ({ schedule, open, setOpen, createSchedule, updateSchedule, d
         const timesValue = times.touched ? times.value || null : '';
 
         const rule  = {hour: Number(hour.value) , minute: Number(minute.value), dayOfWeek: dayOfWeek.value};
-        const scheduleTrigger = {maxTrigger: Number(maxTrigger.value) , minTrigger: Number(minTrigger.value)};
+        const scheduleTrigger = {max: Number(maxTrigger.value) , min: Number(minTrigger.value)};
         const data = {mail: mail.value, name: name.value ,bus: bus.value, station: station.value,
         rule, scheduleTrigger: scheduleTrigger, times: timesValue}
 

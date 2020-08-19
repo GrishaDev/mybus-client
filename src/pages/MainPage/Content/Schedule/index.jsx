@@ -54,7 +54,7 @@ export default memo(({schedule, updateSchedule, deleteSchedule, pauseSchedule}) 
 
     useEffect(()=> {
       return () => {
-        console.log('update');
+        console.log('clear interval');
         clearInterval(interval);
       }
     },[])
@@ -62,7 +62,7 @@ export default memo(({schedule, updateSchedule, deleteSchedule, pauseSchedule}) 
     
     const busTimeHandler = async () => {
       const bustimes = await getBusTimesApi(schedule.station, schedule.bus);
-      setBusTimes(bustimes);
+      setBusTimes(bustimes || 'No buses');
     };
 
     const clickPause = e => {
@@ -103,7 +103,7 @@ export default memo(({schedule, updateSchedule, deleteSchedule, pauseSchedule}) 
               <ScheduleIcon style={{marginTop: 10}}/> <p>{rule}</p>
           </div>
           <div className={classes.info}>
-              <LocationOnIcon style={{marginTop: 10}}/> <p>{busTimes}</p>
+              <LocationOnIcon style={{marginTop: 10}}/> <p>{busTimes.toString()}</p>
           </div>
           <div className={classes.actions}>
             <IconButton style={{color: 'white'}} aria-label="update" onClick={clickUpdate}>

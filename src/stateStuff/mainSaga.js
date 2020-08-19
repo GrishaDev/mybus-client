@@ -78,14 +78,14 @@ function* loginSaga(data) {
         yield call(toApp);
     }
     catch(err){
-        if(err.status === 401) {
+        if(err?.status === 401) {
             console.log('Unauthorized');
             yield put (setDialogStatus({success: false, error: err.data.message}));
             return;
         }
         else {
-            console.log(`Error ${err.status}`);
-            const msg = err.data.message === undefined ? 'Error contacting server' : err.data.message;
+            console.log(`Error ${err?.status}`);
+            const msg = err?.data?.message === undefined ? 'Error contacting server' : err?.data?.message;
             yield put (setDialogStatus({success: false, error: msg}));
         }
         console.log(err);
