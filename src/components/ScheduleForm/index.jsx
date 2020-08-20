@@ -69,17 +69,6 @@ export default ({ form, setForm, setLoading }) => {
         return (!form.station.value && form.station.touched);
     }
 
-    // let more = [];
-    // if (advanced) {
-    //     more = [<TextField key={1} className={classes.fake} margin="normal" name="scheduleTrigger" label="trigger time" value={form.scheduleTrigger.value}
-    //      type="number" helperText="Waits for bus to be X minutes from ur station and only then notificates
-    //      example: if value 12 is given, the service will wait for bus to be 12minutes or less from station and only then notificate" onChange={changeHandler} />,
-
-    //     <TextField key={2}  className={classes.fake} margin="normal" label="how many times?" name="times" value={form.times.value}
-    //      type="number" helperText="How many times to perform the notification? In case you might want the next bus. default value: 1" onChange={changeHandler} />]
-    // }
-
-    // const icon = advanced ? <ExpandLessIcon /> : <ExpandMoreIcon />; 
     return (
             <div className={classes.form}>
                 <div className={classes.fields}>
@@ -95,12 +84,6 @@ export default ({ form, setForm, setLoading }) => {
                     <TextField error={validateStation()} className={classes.fake} margin="normal" type="number" name="station" required label="station id"
                      value={form.station.value} helperText="station number, find it on google maps" onChange={changeHandler} />
 
-                    {/* <TextField error={!form.hour.value && form.hour.touched} className={classes.fake} margin="normal" name="hour" label="Hour" required 
-                    value={form.hour.value} type="number" helperText="Good: 9,  bad: 9:00" onChange={changeHandler} />
-
-                    <TextField error={!form.minute.value && form.minute.touched} className={classes.fake} margin="normal" name="minute" label="Minute" required
-                     value={form.minute.value} type="number" helperText="Good: 30 or 5" onChange={changeHandler}/> */}
-
                     <HourPicker selectedDate={selectedDate} handleDateChange={handleDateChange}/>
 
                     <div className={classes.fake}>
@@ -108,22 +91,6 @@ export default ({ form, setForm, setLoading }) => {
                     </div>
 
                     <DayPicker dayofweek={form.dayOfWeek.value} handleDaysChange={handleDaysChange}/>
-
-
-
-                    {/* <div className={classes.slider}>
-                        <Typography id="range-slider" gutterBottom>
-                            Minimum and maximum time it takes for you to get to your station
-                        </Typography>
-                        <Slider
-                            value={value}
-                            onChange={handleChangeTrigger}
-                            valueLabelDisplay="auto"
-                            aria-labelledby="range-slider"
-                            max={30}
-                            min={1}
-                        />
-                    </div> */}
 
                     <TextField required className={classes.fake} margin="normal" name="maxTrigger" label="Max time to station" value={form.maxTrigger.value}
                         type="number" helperText="How much minutes it takes to get to station from your starting location at most?"
@@ -140,15 +107,6 @@ export default ({ form, setForm, setLoading }) => {
                     <div className={classes.fake}>
 
                     </div>
-
-                    {/* <div className={classes.tick} >
-                        <IconButton onClick={()=> setAdvanced(!advanced)} >
-                            {icon}
-                        </IconButton>
-                        Advanced fields
-                    </div>
-
-                    {more} */}
 
                 </div>
                 <div className={classes.tick}>

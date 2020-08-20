@@ -20,7 +20,6 @@ export default ({selectedDate, handleDateChange}) => {
                 className={classes.timePicker}
                 ampm={false}
                 margin="normal"
-                id="time-picker"
                 label="Depart time"
                 helperText="Time you would like to be on bus."
                 value={selectedDate}

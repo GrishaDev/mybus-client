@@ -15,6 +15,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+
 export default ({ open, setOpen, schedule }) => {
   const classes = useStyles();
 
@@ -24,18 +25,29 @@ export default ({ open, setOpen, schedule }) => {
   };
 
 
-  const title = `Schedule ${schedule?.name || ''}`;
+  const title = `Schedule ${schedule?.name || 'something'}`;
 
-  let items;
-  if(schedule) {
-    let keys = Object.keys(schedule);
-    let values = Object.values(schedule);
-    items = values.map((item,index)=> {
-        let text = keys[index] === 'rule' ? ruleConverter(item) : item;
-        // text = keys[index] === 'webPushSub' ? item ? true : false : false;
+    const keys = Object.keys(schedule);
+    const values = Object.values(schedule);
+    
+    const scheduleFields = values.map((item,index) => {
+        let text = item;
+        switch(keys[index]) {
+          case 'rule':
+            text = ruleConverter(item);
+            break;
+          case 'scheduleTrigger':
+            text = `max: ${item.max}, min: ${item.min}`;
+            break;
+          case 'webPushSub':
+            text = item ? true : false
+            break;
+          default:
+            break;
+        }
         return <div key={index} className={classes.item}>{`${keys[index]}: ${text}`}</div>
-    })
-  }
+    });
+
   return (
       <Dialog
         open={open}
@@ -47,8 +59,7 @@ export default ({ open, setOpen, schedule }) => {
       >
         <DialogTitle id="alert-dialog-slide-title" className={classes.center}>{title}</DialogTitle>
         <DialogContent className={classes.content}>
-          {/* {JSON.stringify(schedule)} */}
-          {items}
+          {scheduleFields}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

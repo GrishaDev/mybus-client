@@ -1,13 +1,15 @@
 export default {
     content: {
-        // minWidth: 400,
+        // minWidth: 600,
+        // width: '500',
         minHeight: 100,
         display: 'flex',
         flexWrap: 'wrap',
         // flexFlow: 'row wrap',
         justifyContent: 'space-around',
         // alignItems: 'center',
-        padding: 10
+        padding: 10,
+        transition: '1s'
     },
     item: {
         margin: 10,

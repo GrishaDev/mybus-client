@@ -59,11 +59,10 @@ export default memo(({schedule, updateSchedule, deleteSchedule, pauseSchedule}) 
       }
     },[])
 
-    
-    const busTimeHandler = async () => {
+    const busTimeHandler = useMemo(()=> async () => {
       const bustimes = await getBusTimesApi(schedule.station, schedule.bus);
       setBusTimes(bustimes || 'No buses');
-    };
+    }, [schedule]);
 
     const clickPause = e => {
       e.stopPropagation();

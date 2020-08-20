@@ -2,6 +2,7 @@ import axios from 'axios';
 import config from 'config';
 import shortid from "shortid";
 import wait from 'utils/wait';
+import mockSchedules from './mockSchedules';
 
 // httpsAgent: new https.Agent({  
 //     rejectUnauthorized: false
@@ -12,13 +13,13 @@ const request = axios.create({
     headers: {auth: localStorage.token}
 });
 
-const mockSchedules = [
-    {id: '3294a', name: "haha", mail: "blabla@bla.com", rule: {hour: 9, minute: 15}, bus: 126, station: 3359, paused: true},
-    {id: '925bamba28', name: "arbuz23", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 0}, bus: 171, station: 1000, scheduleTrigger: 12},
-    {id: 'k0edCov0L', name: "arbuz", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}, bus: 171, station: 1000},
-    {id: 'UV2TWMXak', name: "arbuz", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}, bus: 171, station: 1000},
-    {id: 'xGEzN-iNG', name: "arbuz", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}, bus: 171, station: 1000}
-]
+// const mockSchedules = [
+//     {id: '3294a', name: "haha", mail: "blabla@bla.com", rule: {hour: 9, minute: 15}, bus: 126, station: 3359, paused: true},
+//     {id: '925bamba28', name: "arbuz23", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 0}, bus: 171, station: 1000, scheduleTrigger: 12},
+//     {id: 'k0edCov0L', name: "arbuz", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}, bus: 171, station: 1000},
+//     {id: 'UV2TWMXak', name: "arbuz", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}, bus: 171, station: 1000},
+//     {id: 'xGEzN-iNG', name: "arbuz", mail: "blablaaa@bla.com", rule: {hour: 15, minute: 22}, bus: 171, station: 1000}
+// ]
 
 // const create = {id: '223', mail: "bla213bla@bla.com", rule: {hour: 52, minute: 5}};
 const update = {status: 200, data: {id: '3294a', mail: "bla213bla@bla.com", rule: {hour: 52, minute: 5}}};
